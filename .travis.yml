@@ -17,6 +17,6 @@ cache:
 jobs:
   include:
     - stage: Front-end unit testing
-      script: cd front-end && npm test -- --coverage --watchAll=false
+      script: cd front-end && npm install && npm test -- --coverage --watchAll=false
     - stage: Back-end unit testing
-      script: cd back-end && npm test -- --coverage --watchAll=false
+      script: cd back-end && npm install && npm test -- --coverage --watchAll=false
