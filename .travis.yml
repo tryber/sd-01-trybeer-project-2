@@ -16,12 +16,7 @@ cache:
 
 jobs:
   include:
-    - stage: Unit testing
-      script: npm test -- --coverage --watchAll=false
-    - stage: End to end testing
-      install:
-        - npm ci
-        - npm install wait-on
-      script:
-        - npm start & wait-on http://localhost:3000
-        - $(npm bin)/cypress run
+    - stage: Front-end unit testing
+      script: cd front-end && npm test -- --coverage --watchAll=false
+    - stage: Back-end unit testing
+      script: cd back-end && npm test -- --coverage --watchAll=false
