@@ -4,8 +4,8 @@ class Login {
     this.password = password;
   }
 
-  async login(email, password) {
-    return { email, password };
+  async login() {
+    return { email: this.email, password: this.password };
   }
 }
 
