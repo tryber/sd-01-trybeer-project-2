@@ -10,14 +10,11 @@ function RegisterPage() {
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [wantSell, setWantSell] = useState(false);
-
   useEffect(() => {
     validateLogin(setIsAdmin, setIsLoged);
   }, []);
-
   if ((isLoged || shouldRedirect) && isAdmin) return <Redirect to='/admin/home' />;
   if ((isLoged || shouldRedirect) && !isAdmin) return <Redirect to='/cliente/products' />;
-
   return (
     <div>
       <form onSubmit={(e) => sendData(e, { email, password, name, wantSell }, setShouldRedirect, 'register')}>
