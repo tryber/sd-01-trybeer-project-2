@@ -40,6 +40,9 @@ Esse repositório contém duas pastas, `back-end` e `front-end`, onde você deve
 
 Para o banco de dados, você deverá utilizar o `MySQL`. Modele-o e disponibilize um script, na raiz do seu app, para que o seu projeto seja corrigido utilizando o banco de dados arquitetado por você! O nome do script deve ser `script.sql`.
 
+Para servir arquivos estáticos como imagens no back-end, utilize o seguinte path:
+`/back-end/public/`
+
 ##### Você também deve **escrever testes unitários que devem cobrir pelo menos 90% do projeto**. Na [documentação do Jest CLI](https://jestjs.io/docs/en/cli) é possível ver como essa cobertura é coletada.
 
 Para que seu projeto seja corretamente avaliado, siga as orientações a seguir:
