@@ -1,4 +1,3 @@
-drop database IF EXISTS trybeer;
 CREATE DATABASE IF NOT EXISTS trybeer;
 USE trybeer ;
 
