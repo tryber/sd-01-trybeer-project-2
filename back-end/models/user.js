@@ -5,7 +5,7 @@ class User {
     this.name = name;
     this.email = email;
     this.password = password;
-    this.role = role;
+        this.role = role;
   }
 
   async login() {
