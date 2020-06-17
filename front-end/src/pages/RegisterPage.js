@@ -1,13 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
-import { validateLogin } from '../service';
-
-async function sendData(event, data, setShouldRedirect) {
-  event.preventDefault();
-  const result = await fetch('http://localhost/3001/register', { method: 'POST', headers: data }).then(res => res.json());
-  localStorage.setItem('user', JSON.stringify(result));
-  setShouldRedirect(true);
-}
+import { validateLogin, sendData } from '../service';
 
 function RegisterPage() {
   const [isLoged, setIsLoged] = useState(false);
@@ -27,7 +20,7 @@ function RegisterPage() {
 
   return (
     <div>
-      <form onSubmit={(e) => sendData(e, { email, password, name, wantSell }, setShouldRedirect)}>
+      <form onSubmit={(e) => sendData(e, { email, password, name, wantSell }, setShouldRedirect, 'register')}>
         <label htmlFor="name">Nome</label>
         <input type="text" data-testid="signup-name" id="name" name="name" pattern="^[a-zA-Z]{12,40}$" onChange={(e) => setName(e.target.value)} required />
         <label htmlFor="email">Email</label>

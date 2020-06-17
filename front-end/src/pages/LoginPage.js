@@ -1,13 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
-import { validateLogin } from '../service';
-
-async function sendData(event, data, setShouldRedirect) {
-  event.preventDefault();
-  const result = await fetch('http://localhost/3001/login', { method: 'POST', headers: data }).then(res => res.json());
-  localStorage.setItem('user', JSON.stringify(result));
-  setShouldRedirect(true);
-}
+import { validateLogin, sendData } from '../service';
 
 function LoginPage() {
   const [isLoged, setIsLoged] = useState(false);
@@ -26,7 +19,7 @@ function LoginPage() {
 
   return (
     <div>
-      <form onSubmit={(e) => sendData(e, { email, password }, setShouldRedirect)}>
+      <form onSubmit={(e) => sendData(e, { email, password }, setShouldRedirect, 'login')}>
         <label htmlFor="email">Email</label>
         <input type="email" data-testid="email-input" id="email" name="email" onChange={(e) => setEmail(e.target.value)} required />
         <label htmlFor="password">Senha</label>

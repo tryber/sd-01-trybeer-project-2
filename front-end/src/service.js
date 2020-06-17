@@ -9,3 +9,10 @@ export function validateLogin(setIsAdmin, setIsLoged) {
   }
   getUserData();
 }
+
+export async function sendData(event, data, setShouldRedirect, url) {
+  event.preventDefault();
+  const result = await fetch(`http://localhost/3001/${url}`, { method: 'POST', headers: data }).then(res => res.json());
+  localStorage.setItem('user', JSON.stringify(result));
+  setShouldRedirect(true);
+}
