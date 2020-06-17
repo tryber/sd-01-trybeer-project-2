@@ -3,7 +3,7 @@ const express = require('express')
 
 const router = express.Router();
 
-const rescue = require('../service/rescue')
+const rescue = require('../rescue')
 
 const Login = require('../models/login');
 
@@ -16,6 +16,9 @@ const callBackDoLogin = async (req, res) => {
 
 
   };
+  
+
+
   
   
   router.post('/login', rescue(callBackDoLogin));
