@@ -9,9 +9,9 @@ function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  useEffect(() => {
-    validateLogin(setIsAdmin, setIsLoged);
-  }, []);
+  // useEffect(() => {
+  //   validateLogin(setIsAdmin, setIsLoged);
+  // }, []);
 
   if (isLoged && isAdmin) return <Redirect to='/admin/home' />;
   if (isLoged && !isAdmin) return <Redirect to='/cliente/products' />;
