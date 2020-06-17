@@ -1,4 +1,3 @@
-
 class Login {
   constructor(email, password) {
     this.email = email;
@@ -6,8 +5,7 @@ class Login {
   }
 
   async login(email, password) {
-   
-    return {email, password}
+    return { email, password };
   }
 }
 
