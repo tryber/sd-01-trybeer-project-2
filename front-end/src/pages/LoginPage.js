@@ -19,7 +19,7 @@ function LoginPage() {
 
   return (
     <div>
-      <form onSubmit={(e) => sendData(e, { email, password }, setShouldRedirect, 'login')}>
+      <form onSubmit={(e) => sendData(e, { email, password }, setShouldRedirect)}>
         <label htmlFor="email">Email</label>
         <input type="email" data-testid="email-input" id="email" name="email" onChange={(e) => setEmail(e.target.value)} required />
         <label htmlFor="password">Senha</label>
