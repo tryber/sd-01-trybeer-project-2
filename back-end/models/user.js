@@ -9,7 +9,6 @@ class User {
   }
 
   async login() {
-
     return { email: this.email, password: this.password };
   }
 
