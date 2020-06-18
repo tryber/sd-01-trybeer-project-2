@@ -8,9 +8,16 @@ class User {
     this.role = role;
   }
 
-  async login() {
-    return { email: this.email, password: this.password };
-  }
+  async login(email, password) {
+    console.log(email, password)
+    const query = `SELECT * FROM user WHERE email = "${email}" AND password = "${password}"`;
+    return new Promise((resolve, reject) => {
+      conn.query(query, (err, results) => {
+        if (err) return reject(err);
+        return resolve(results[0]);
+      });
+    });
+
 
   async createUser() {
     const { name, email, password, role } = this;
