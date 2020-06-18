@@ -32,7 +32,7 @@ const login = async (req, res) => {
 const createUser = async (req, res) => {
   const { name, email, password, role } = req.body;
   const user = new User(name, email, password, role);
-  return await user.createUser().then(_body => {
+  return await user.createUser().then((_body) => {
     const token = generateJWT(email);
     res.status(200).json({ name, token, email, role });
   });
@@ -45,7 +45,7 @@ const getOneUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
   const { name, email, role } = req.user;
-  const user = new User(name, email, _password, role);
+  const user = new User(name, email, '', role);
   return user.updateNameUser().then(body => res.status(200).json(body));
 };
 
