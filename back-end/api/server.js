@@ -2,7 +2,7 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
-const { user, products } = require('./routes');
+const { user, product, order } = require('./routes');
 
 const app = express();
 
@@ -12,6 +12,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use(user);
-app.use(products);
+app.use(product);
+app.use(order)
 
 module.exports = app;

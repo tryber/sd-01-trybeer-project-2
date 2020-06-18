@@ -7,7 +7,7 @@ const router = express.Router();
 const createOrder = async (req, res) => {
   const { street, number, finished, cart_id: cartId } = req.body;
   const order = new Order(street, number, finished, cartId);
-  return await order.create().then(body => res.status(201).json(body));
+  return order.create().then(body => res.status(201).json(body));
 };
 
 router.post('/order', rescue(createOrder));
