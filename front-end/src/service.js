@@ -10,9 +10,9 @@ export function validateLogin(setIsAdmin, setIsLoged) {
   getUserData();
 }
 
-export async function sendData(event, data, setShouldRedirect) {
+export async function sendData(event, data, url, setIsAdmin, setIsLoged) {
   event.preventDefault();
-  const result = await fetch(`http://localhost:3001/user`,
+  const result = await fetch(`http://localhost:3001/${url}`,
     {
       method: 'POST',
       headers: {
@@ -24,5 +24,6 @@ export async function sendData(event, data, setShouldRedirect) {
     .then(res => res.json());
   if (result.message) return alert('Email já cadastrado');
   localStorage.setItem('user', JSON.stringify(result));
-  setShouldRedirect(true);
+  if(result.role) setIsAdmin(true);
+  setIsLoged(true);
 }
