@@ -17,7 +17,7 @@ class User {
         return resolve(results[0]);
       });
     });
-
+  }
 
   async createUser() {
     const { name, email, password, role } = this;
