@@ -11,7 +11,6 @@ app.use(express.static(path.resolve(__dirname, '..', 'public', 'images')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-
 app.use(user);
 
 module.exports = app;
