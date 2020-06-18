@@ -8,9 +8,9 @@ class User {
     this.role = role;
   }
 
-  async login() {
-    const { email, password } = this;
-    const query = `INSERT INTO user (email, password) VALUES ('${email}', '${password}')`;
+  async login(email, password) {
+    console.log(email, password)
+    const query = `SELECT * FROM user WHERE email = "${email}" AND password = "${password}"`;
     return new Promise((resolve, reject) => {
       conn.query(query, (err, results) => {
         if (err) return reject(err);
