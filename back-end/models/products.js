@@ -12,7 +12,6 @@ class Products {
     return new Promise((resolve, reject) => {
       conn.query(query, (err, results) => {
         if (err) return reject(err);
-        console.log('o que tem alqui?',results);
         return resolve(results);
       });
     });
