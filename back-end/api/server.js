@@ -2,7 +2,7 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
-const {  user } = require('./routes');
+const { user, products } = require('./routes');
 
 const app = express();
 
@@ -12,5 +12,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use(user);
+app.use(products);
 
 module.exports = app;
