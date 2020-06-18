@@ -1,15 +1,18 @@
 const express = require('express');
+
 const router = express.Router();
+
 const rescue = require('../rescue');
 
 const User = require('../models/user');
+
 const jwt = require('jsonwebtoken');
 
 const secret = 'trybeer';
 
 const verifyJWT = require('../middlewares/verifyJWT');
 
-const generateJWT = email => {
+const generateJWT = (email) => {
   const jwtConfig = {
     expiresIn: '1m',
     algorithm: 'HS256',
