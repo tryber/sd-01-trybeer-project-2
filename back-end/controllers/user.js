@@ -1,7 +1,7 @@
 const express = require('express');
+const jwt = require('jsonwebtoken');
 const rescue = require('../rescue');
 const User = require('../models/user');
-const jwt = require('jsonwebtoken');
 
 const router = express.Router();
 const secret = 'trybeer';
@@ -14,6 +14,7 @@ const generateJWT = (email) => {
   const token = jwt.sign({ email }, secret, jwtConfig);
   return token;
 }
+
 const login = async (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
@@ -25,8 +26,6 @@ const login = async (req, res) => {
   res.status(200).json({ name: user.name, token, email, role: user.admin });
 };
 
-const router = express.Router();
-
 const callBackCreateUser = async (req, res) => {
   const { name, email, password, role } = req.body;
   const user = new User(name, email, password, role);
@@ -37,7 +36,6 @@ const callBackCreateUser = async (req, res) => {
 };
 
 router.post('/user', rescue(callBackCreateUser));
-
 router.post('/login', rescue(login));
 
 module.exports = router;

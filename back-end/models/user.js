@@ -31,7 +31,7 @@ class User {
   }
 
   static async validateEmail(email) {
-    const query = `SELECT email FROM trybeer.user WHERE email = ${email};`;
+    const query = `SELECT * FROM user WHERE email = ${email};`;
     return new Promise((resolve, reject) => {
       conn.query(query, (err, results) => {
         if (err) return reject(err);
