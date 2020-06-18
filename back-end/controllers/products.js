@@ -8,11 +8,8 @@ const Products = require('../models/products');
 
 // const verifyJWT = require('../middlewares/verifyJWT')
 
-const callBackAllProducts = async (_req, res) => {
-  return await Products.allProducts().then(body => {
-    res.status(201).json(body);
-  });
-};
+const callBackAllProducts = (_req, res) =>
+  Products.allProducts().then(body => res.status(201).json(body));
 
 router.get('/products', rescue(callBackAllProducts));
 
