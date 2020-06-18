@@ -12,6 +12,7 @@ module.exports = async (req, res, next) => {
       return res.status(401).json({ message: 'Token inválido!' });
     req.user = payload;
     next();
+    
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
