@@ -24,6 +24,17 @@ class User {
       });
     });
   }
+
+  static async validateEmail(email) {
+    const query = `SELECT email FROM trybeer.user WHERE email = ${email};`;
+    return new Promise((resolve, reject) => {
+      conn.query(query, (err, results) => {
+        if (err) return reject(err);
+        console.log('o que tem alqui?', results[0]);
+        return resolve(results[0]);
+      });
+    });
+  }
 }
 
 module.exports = User;
