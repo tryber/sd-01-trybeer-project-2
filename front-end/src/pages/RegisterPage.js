@@ -3,9 +3,9 @@ import { Redirect } from 'react-router-dom';
 import { validateLogin, sendData } from '../service';
 
 const generateForm = (param) => {
-  const { sendData, setShouldRedirect, email, setEmail, password, setPassword, name, setName, role, setRole } = param;
+  const { sendData, setIsLoged, setIsAdmin, email, setEmail, password, setPassword, name, setName, role, setRole } = param;
   return (
-    <form onSubmit={(e) => sendData(e, { email, password, name, role }, setShouldRedirect)}>
+    <form onSubmit={(e) => sendData(e, { email, password, name, role },'user', setIsAdmin, setIsLoged)}>
       <label htmlFor="name">Nome</label>
       <input type="text" data-testid="signup-name" id="name" name="name" pattern="^[a-zA-Z]{12,40}$" onChange={(e) => setName(e.target.value)} required />
       <label htmlFor="email">Email</label>
@@ -23,7 +23,6 @@ function RegisterPage() {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [isLoged, setIsLoged] = useState(false);
-  const [shouldRedirect, setShouldRedirect] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [name, setName] = useState('');
   const [role, setRole] = useState(false);
@@ -32,10 +31,10 @@ function RegisterPage() {
   //   validateLogin(setIsAdmin, setIsLoged);
   // }, []);
 
-  if ((isLoged || shouldRedirect) && isAdmin) return <Redirect to='/admin/home' />;
-  if ((isLoged || shouldRedirect) && !isAdmin) return <Redirect to='/cliente/products' />;
+  if (isLoged && isAdmin) return <Redirect to='/admin/home' />;
+  if (isLoged && !isAdmin) return <Redirect to='/cliente/products' />;
 
-  const allProperties = { sendData, setShouldRedirect, email, setEmail, password, setPassword, name, setName, role, setRole };
+  const allProperties = { sendData, setIsLoged, setIsAdmin, email, setEmail, password, setPassword, name, setName, role, setRole };
   return (
     <div>
       {generateForm(allProperties)}
