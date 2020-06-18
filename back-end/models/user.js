@@ -17,7 +17,7 @@ class User {
         return resolve(results[0]);
       });
     });
-  }
+
 
   async createUser() {
     const { name, email, password, role } = this;
@@ -28,6 +28,17 @@ class User {
       conn.query(query, (err, _results) => {
         if (err) return reject(err);
         return resolve({ name, email, password, role: admin });
+      });
+    });
+  }
+
+  static async validateEmail(email) {
+    const query = `SELECT email FROM trybeer.user WHERE email = ${email};`;
+    return new Promise((resolve, reject) => {
+      conn.query(query, (err, results) => {
+        if (err) return reject(err);
+        console.log('o que tem alqui?', results[0]);
+        return resolve(results[0]);
       });
     });
   }
