@@ -6,7 +6,7 @@ module.exports = async (req, res, next) => {
   try {
     const token = req.headers.authorization;
     const payload = jwt.verify(token, secret);
-    const { email } = payload.data;
+    const { email } = payload;
     const verifyUser = await User.validateEmail(email);
     if (!verifyUser)
       return res.status(401).json({ message: 'Token inválido!' });

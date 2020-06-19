@@ -10,7 +10,7 @@ const secret = 'trybeer';
 
 const generateJWT = (email) => {
   const jwtConfig = {
-    expiresIn: '1m',
+    expiresIn: '1d',
     algorithm: 'HS256',
   };
   const token = jwt.sign({ email }, secret, jwtConfig);
