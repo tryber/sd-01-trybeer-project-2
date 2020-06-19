@@ -1,13 +1,10 @@
-export function validateLogin(setIsAdmin, setIsLoged) {
-  const user = localStorage.getItem('user');
-  if (!user) return;
-  async function getUserData() {
-    const result = await fetch('http://localhost:3001/user', { method: 'GET', headers: user }).then(res => res.json());
-    if (!result) return false;
-    if (result.role) setIsAdmin(true);
-    setIsLoged(true);
-  }
-  getUserData();
+export async function validateLogin(setIsAdmin, setIsLoged) {
+  if (!JSON.parse(localStorage.getItem('user'))) return;
+  const result = await fetch('http://localhost:3001/user', { method: 'GET', headers: { authorization: JSON.parse(localStorage.getItem('user')).token }})
+  .then(res => res.json());
+  if (!result || result.message === "jwt expired") return false;
+  if (result.response.role) setIsAdmin(true);
+  setIsLoged(true);
 }
 
 export async function sendData(event, data, url, setIsAdmin, setIsLoged) {

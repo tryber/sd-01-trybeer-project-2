@@ -7,7 +7,7 @@ class Products {
     this.price = price;
   }
 
-  static async allProducts() {
+  static async getAllProducts() {
     const query = 'SELECT * FROM trybeer.product;';
     return new Promise((resolve, reject) => {
       conn.query(query, (err, results) => {
