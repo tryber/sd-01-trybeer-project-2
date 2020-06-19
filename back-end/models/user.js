@@ -21,7 +21,7 @@ class User {
   }
 
   static async validateEmail(email) {
-    const query = `SELECT email FROM trybeer.user WHERE email = ${email};`;
+    const query = `SELECT * FROM user WHERE email = '${email}';`;
     return new Promise((resolve, reject) => {
       conn.query(query, (err, results) => {
         if (err) return reject(err);
@@ -31,7 +31,7 @@ class User {
   }
 
   static async getUserbyId(id) {
-    const query = `SELECT name, email FROM trybeer.user WHERE user_id = ${id};`;
+    const query = `SELECT name, email FROM trybeer.user WHERE user_id = '${id}';`;
     return new Promise((resolve, reject) => {
       conn.query(query, (err, results) => {
         if (err) return reject(err);
@@ -42,7 +42,7 @@ class User {
 
   async updateNameUser() {
     const { name, email } = this;
-    const query = `UPDATE trybeer.user SET name = ${name} WHERE email = ${email};`;
+    const query = `UPDATE user SET name = '${name}' WHERE email = '${email}';`;
     return new Promise((resolve, reject) => {
       conn.query(query, (err, _results) => {
         if (err) return reject(err);
