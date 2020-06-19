@@ -10,14 +10,14 @@ const createUser = async (req, res) => {
   const { name, email, password, role } = req.body;
   const user = new User(name, email, password, role);
   return await user.createUser().then(() => {
-    const token = generateJWT(email);
-    res.status(200).json({ name, token, email, role });
+    const token = generateJWT(email, role);
+    res.status(201).json({ name, token, email, role });
   });
 };
 
 const getOneUser = async (req, res) => {
-  const response = req.user;
-  return res.status(200).json({ response });
+  const { email } = req.user;
+  return res.status(200).json({ email });
 };
 
 const updateUser = async (req, res) => {
