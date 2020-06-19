@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use('/user', user);
-app.use('/login', login)
+app.use('/login', login);
 app.use('/products', verifyJWT, products);
 app.use('/orders', verifyJWT, order);
 

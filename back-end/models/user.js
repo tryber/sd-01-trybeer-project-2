@@ -31,7 +31,7 @@ class User {
   }
 
   static async getUserbyId(id) {
-    const query = `SELECT name, email FROM trybeer.user WHERE user_id = '${id}';`;
+    const query = `SELECT name, email FROM user WHERE user_id = '${id}';`;
     return new Promise((resolve, reject) => {
       conn.query(query, (err, results) => {
         if (err) return reject(err);
