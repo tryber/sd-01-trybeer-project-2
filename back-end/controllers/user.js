@@ -3,19 +3,9 @@ const jwt = require('jsonwebtoken');
 const rescue = require('../rescue');
 const User = require('../models/user');
 const verifyJWT = require('../middlewares/verifyJWT');
+const generateJWT = require('../service/generateJWT');
 
 const router = express.Router();
-
-const secret = 'trybeer';
-
-const generateJWT = (email) => {
-  const jwtConfig = {
-    expiresIn: '1d',
-    algorithm: 'HS256',
-  };
-  const token = jwt.sign({ email }, secret, jwtConfig);
-  return token;
-};
 
 const createUser = async (req, res) => {
   const { name, email, password, role } = req.body;
@@ -32,7 +22,7 @@ const getOneUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  const { name, email, role } = req.user;
+  const { name } = req.user;
   const user = new User(name, email, '', role);
   return user.updateNameUser().then(body => res.status(200).json(body));
 };
