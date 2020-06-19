@@ -1,6 +1,6 @@
 const conn = require('../connection');
 
-class Products {
+class Product {
   constructor(productId, name, price) {
     this.productId = productId;
     this.name = name;
@@ -18,4 +18,4 @@ class Products {
   }
 }
 
-module.exports = Products;
+module.exports = Product;

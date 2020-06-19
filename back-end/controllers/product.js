@@ -1,13 +1,12 @@
 const express = require('express');
 const rescue = require('../rescue');
-const Products = require('../models/product');
-const verifyJWT = require('../middlewares/verifyJWT')
+const Product = require('../models/product');
 
 const router = express.Router();
 
-const callBackAllProducts = async (_req, res) =>
-  Products.allProducts().then(body => res.status(201).json(body));
+const callBackAllProducts = (_req, res) =>
+  Product.allProducts().then(body => res.status(201).json(body));
 
-router.get('/products', verifyJWT, rescue(callBackAllProducts));
+router.get('/', rescue(callBackAllProducts));
 
 module.exports = router;
