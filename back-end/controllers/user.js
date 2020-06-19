@@ -1,5 +1,4 @@
 const express = require('express');
-const jwt = require('jsonwebtoken');
 const rescue = require('../rescue');
 const User = require('../models/user');
 const verifyJWT = require('../middlewares/verifyJWT');

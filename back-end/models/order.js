@@ -44,7 +44,7 @@ class Order {
   }
 
   static async getDetails(orderId) {
-    const query = `SELECT * FROM purchase WHERE purchase_id = '${orderId}';`
+    const query = `SELECT * FROM purchase WHERE purchase_id = '${orderId}';`;
     return new Promise((resolve, reject) => {
       conn.query(query, (err, results) => {
         if (err) return reject(err);
