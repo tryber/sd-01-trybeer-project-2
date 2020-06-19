@@ -9,6 +9,7 @@ function App() {
   return (
     <div>
       <Card
+      key={'1'}
         image={
           'https://apoioentrega.vteximg.com.br/arquivos/ids/450246-1000-1000/1388.jpg?v=637003353652200000'
         }

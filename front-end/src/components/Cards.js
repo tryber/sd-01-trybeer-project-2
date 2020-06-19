@@ -12,6 +12,8 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 // import Link from '@material-ui/core/Link';
 
 const useStyles = makeStyles(theme => ({
@@ -49,7 +51,7 @@ const useStyles = makeStyles(theme => ({
 function Cards(props) {
   const classes = useStyles();
 
-  const { image, price, description, quantity } = props;
+  const { image, price, description, quantity, id } = props;
 
   return (
     <div>
@@ -57,7 +59,7 @@ function Cards(props) {
         {/* End hero unit */}
         <Grid container spacing={4}>
           {/* {images.map(card => ( */}
-          <Grid item key={card} xs={12} sm={6} md={4}>
+          <Grid item key={id} xs={12} sm={6} md={4}>
             <Card className={classes.card}>
               <CardMedia
                 className={classes.cardMedia}
@@ -72,11 +74,11 @@ function Cards(props) {
               </CardContent>
               <CardActions>
                 <Button size='small' color='primary'>
-                  +
+                  <RemoveCircleIcon />
                 </Button>
                 <span>{quantity}</span>
                 <Button size='small' color='primary'>
-                  -
+                  <AddCircleIcon />
                 </Button>
               </CardActions>
             </Card>
