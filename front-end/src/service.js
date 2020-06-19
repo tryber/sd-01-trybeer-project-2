@@ -1,8 +1,8 @@
 export function validateLogin(setIsAdmin, setIsLoged) {
-  const user = JSON.parse(localStorage.getItem('user'));
-  if (!user) return;
+  if (!JSON.parse(localStorage.getItem('user'))) return;
   async function getUserData() {
-    const result = await fetch('http://localhost:3001/user', { method: 'GET', headers: { authorization: user.token }}).then(res => res.json());
+    const result = await fetch('http://localhost:3001/user', { method: 'GET', headers: { authorization: JSON.parse(localStorage.getItem('user')).token }})
+    .then(res => res.json());
     if (!result || result.message === "jwt expired") return false;
     if (result.response.role) setIsAdmin(true);
     setIsLoged(true);

@@ -19,7 +19,7 @@ function ProfilePage() {
   const user = JSON.parse(localStorage.getItem('user'));
   const firstName = user.name;
   const [name, setName] = useState(firstName);
-  
+
   useEffect(() => {
     async function getUser() {
       await fetch('http://localhost:3001/user', { headers: { authorization: user.token } })
