@@ -2,7 +2,7 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
-const verifyJWT = require('../middlewares/verifyJWT')
+const verifyJWT = require('../middlewares/verifyJWT');
 const { user, products, login, order } = require('./routes');
 
 const app = express();

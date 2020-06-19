@@ -2,6 +2,7 @@ const express = require('express');
 const rescue = require('../rescue');
 const User = require('../models/user');
 const generateJWT = require('../service/generateJWT');
+const verifyJWT = require('../middlewares/verifyJWT');
 
 const router = express.Router();
 
@@ -20,8 +21,8 @@ const getOneUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  const { name, email, role } = req.user;
-  const user = new User(name, email, '', role);
+  const { email } = req.user;
+  const user = new User(req.body.name, email);
   return user.updateNameUser().then(body => res.status(200).json(body));
 };
 
