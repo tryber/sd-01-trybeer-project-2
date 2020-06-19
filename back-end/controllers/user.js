@@ -1,16 +1,12 @@
 const express = require('express');
+const jwt = require('jsonwebtoken');
+const rescue = require('../rescue');
+const User = require('../models/user');
+const verifyJWT = require('../middlewares/verifyJWT');
 
 const router = express.Router();
 
-const rescue = require('../rescue');
-
-const User = require('../models/user');
-
-const jwt = require('jsonwebtoken');
-
 const secret = 'trybeer';
-
-const verifyJWT = require('../middlewares/verifyJWT');
 
 const generateJWT = (email) => {
   const jwtConfig = {
@@ -19,17 +15,6 @@ const generateJWT = (email) => {
   };
   const token = jwt.sign({ email }, secret, jwtConfig);
   return token;
-};
-
-const login = async (req, res) => {
-  const email = req.body.email;
-  const password = req.body.password;
-  if (!email || !password)
-    return res.status(422).json({ message: 'Campos vazios!' });
-  const user = await User.login(email, password);
-  if (!user) return res.status(401).json({ message: 'Usuário não encontrado' });
-  const token = generateJWT(email);
-  res.status(200).json({ name: user.name, token, email, role: user.admin });
 };
 
 const createUser = async (req, res) => {
@@ -52,12 +37,10 @@ const updateUser = async (req, res) => {
   return user.updateNameUser().then(body => res.status(200).json(body));
 };
 
-router.post('/user', rescue(createUser));
+router.post('/', rescue(createUser));
 
-router.post('/login', rescue(login));
+router.get('/', verifyJWT, rescue(getOneUser));
 
-router.get('/user', verifyJWT, rescue(getOneUser));
-
-router.put('/user', verifyJWT, rescue(updateUser));
+router.put('/', verifyJWT, rescue(updateUser));
 
 module.exports = router;

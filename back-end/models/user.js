@@ -8,16 +8,6 @@ class User {
     this.role = role;
   }
 
-  static async login(email, password) {
-    const query = `SELECT * FROM user WHERE email = "${email}" AND password = "${password}"`;
-    return new Promise((resolve, reject) => {
-      conn.query(query, (err, results) => {
-        if (err) return reject(err);
-        return resolve(results[0]);
-      });
-    });
-  }
-
   async createUser() {
     const { name, email, password, role } = this;
     const admin = role ? 1 : 0;
