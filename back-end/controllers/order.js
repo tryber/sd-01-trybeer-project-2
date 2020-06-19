@@ -10,6 +10,6 @@ const createOrder = async (req, res) => {
   return order.create().then(body => res.status(201).json(body));
 };
 
-router.post('/order', rescue(createOrder));
+router.post('/', rescue(createOrder));
 
 module.exports = router;
