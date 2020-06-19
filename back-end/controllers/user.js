@@ -11,7 +11,7 @@ const createUser = async (req, res) => {
   const { name, email, password, role } = req.body;
   const user = new User(name, email, password, role);
   return await user.createUser().then((_body) => {
-    const token = generateJWT(email);
+    const token = generateJWT(email, role);
     res.status(200).json({ name, token, email, role });
   });
 };
@@ -22,8 +22,8 @@ const getOneUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  const { name } = req.user;
-  const user = new User(name, email, '', role);
+  const { email } = req.user;
+  const user = new User(req.body.name, email, '', '');
   return user.updateNameUser().then(body => res.status(200).json(body));
 };
 

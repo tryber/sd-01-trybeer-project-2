@@ -42,7 +42,7 @@ class User {
 
   async updateNameUser() {
     const { name, email } = this;
-    const query = `UPDATE trybeer.user SET name = ${name} WHERE email = '${email}';`;
+    const query = `UPDATE user SET name = '${name}' WHERE email = '${email}';`;
     return new Promise((resolve, reject) => {
       conn.query(query, (err, _results) => {
         if (err) return reject(err);
