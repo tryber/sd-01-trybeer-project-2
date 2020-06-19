@@ -2,11 +2,11 @@ const jwt = require('jsonwebtoken');
 
 const secret = 'trybeer';
 
-module.exports = (name, email) => {
+module.exports = (email) => {
   const jwtConfig = {
     expiresIn: '1d',
     algorithm: 'HS256',
   };
-  const token = jwt.sign({ name, email }, secret, jwtConfig);
+  const token = jwt.sign({ email }, secret, jwtConfig);
   return token;
 };
