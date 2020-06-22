@@ -14,6 +14,15 @@ async function submitData(event, name, user) {
   });
 }
 
+async function getUser(user, setData) {
+  await fetch('http://localhost:3001/user', { headers: { authorization: user.token } })
+  .then((res) => res.json())
+  .then((result) => setData(result));
+}
+
+const nameTestId = isAdmin ? 'profile-name' : 'profile-email-input';
+const emailTestId = isAdmin ? 'profile-email' : 'profile-email-input';
+
 function ProfilePage() {
   const [data, setData] = useState('');
   const user = JSON.parse(localStorage.getItem('user'));
@@ -22,20 +31,11 @@ function ProfilePage() {
     firstName = user.name;
     isAdmin = user.role
   }
-  const [savedName, setSavedName] = useState(firstName); 
+  const [savedName, setSavedName] = useState(firstName);
   const [name, setName] = useState(firstName);
-  const nameTestId = isAdmin ? 'profile-name' : 'profile-email-input';
-  const emailTestId = isAdmin ? 'profile-email' : 'profile-email-input';
 
   useEffect(() => {
-    if (user) {
-      async function getUser() {
-        await fetch('http://localhost:3001/user', { headers: { authorization: user.token } })
-        .then((res) => res.json())
-        .then((result) => setData(result));
-      }
-      getUser();
-    }
+    if (user) getUser(user, setData);
   }, []);
 
   if (data.message || !user) return <Redirect to='/login'/>;
