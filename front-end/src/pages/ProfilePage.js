@@ -20,6 +20,14 @@ async function getUser(user, setData) {
   .then((result) => setData(result));
 }
 
+function testId(type, isAdmin) {
+  if (isAdmin) {
+    if (type === 'name') return 'profile-name';
+    return 'profile-email';
+  }
+  if (type === 'name') return 'profile-name-input';
+  return 'profile-email-input';
+}
 
 function ProfilePage() {
   const [data, setData] = useState('');
@@ -31,8 +39,6 @@ function ProfilePage() {
   }
   const [savedName, setSavedName] = useState(firstName);
   const [name, setName] = useState(firstName);
-  const nameTestId = isAdmin ? 'profile-name' : 'profile-email-input';
-  const emailTestId = isAdmin ? 'profile-email' : 'profile-email-input';
 
   useEffect(() => {
     if (user) getUser(user, setData);
@@ -44,9 +50,9 @@ function ProfilePage() {
     <div>
       <form onSubmit={(e) => submitData(e, name, user)}>
         <label htmlFor="name">Nome: </label>
-        <input type="text" data-testid={nameTestId} value={name} id="name" name="name" pattern="^[a-zA-Z\s]{12,40}$" onChange={(e) => setName(e.target.value)} readOnly={isAdmin} required />
+        <input type="text" data-testid={testId('name', isAdmin)} value={name} id="name" name="name" pattern="^[a-zA-Z\s]{12,40}$" onChange={(e) => setName(e.target.value)} readOnly={isAdmin} required />
         <label htmlFor="email">Email: </label>
-        <input type="email" data-testid={emailTestId} value={data.email} id="email" name="email" readOnly />
+        <input type="email" data-testid={testId('email', isAdmin)} value={data.email} id="email" name="email" readOnly />
         {!isAdmin && <button data-testid="profile-save-btn" onClick={() => setSavedName(name)} disabled={name === savedName}>Salvar</button>}
       </form>
     </div>
