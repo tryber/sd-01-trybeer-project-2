@@ -3,7 +3,7 @@ export async function validateLogin(setIsAdmin, setIsLoged) {
   const result = await fetch('http://localhost:3001/user', { method: 'GET', headers: { authorization: JSON.parse(localStorage.getItem('user')).token }})
   .then(res => res.json());
   if (!result || result.message === "jwt expired") return false;
-  if (result.response.role) setIsAdmin(true);
+  if (result.role) setIsAdmin(true);
   setIsLoged(true);
 }
 
