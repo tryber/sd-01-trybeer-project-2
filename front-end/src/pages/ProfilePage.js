@@ -20,8 +20,6 @@ async function getUser(user, setData) {
   .then((result) => setData(result));
 }
 
-const nameTestId = isAdmin ? 'profile-name' : 'profile-email-input';
-const emailTestId = isAdmin ? 'profile-email' : 'profile-email-input';
 
 function ProfilePage() {
   const [data, setData] = useState('');
@@ -33,6 +31,8 @@ function ProfilePage() {
   }
   const [savedName, setSavedName] = useState(firstName);
   const [name, setName] = useState(firstName);
+  const nameTestId = isAdmin ? 'profile-name' : 'profile-email-input';
+  const emailTestId = isAdmin ? 'profile-email' : 'profile-email-input';
 
   useEffect(() => {
     if (user) getUser(user, setData);
