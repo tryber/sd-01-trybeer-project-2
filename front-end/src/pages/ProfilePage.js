@@ -17,7 +17,7 @@ async function submitData(event, name, user) {
 function ProfilePage() {
   const [data, setData] = useState('');
   const user = JSON.parse(localStorage.getItem('user'));
-  const firstName = user.name;
+  const firstName = user.name || '';
   const [name, setName] = useState(firstName);
 
   useEffect(() => {
@@ -31,13 +31,14 @@ function ProfilePage() {
 
   if (data.message) return <Redirect to='/login'/>;
   if (!data) return <div>Loading...</div>;
+  console.log(data)
   return (
     <div>
       <form onSubmit={(e) => submitData(e, name, user)}>
         <label htmlFor="name">Nome</label>
         <input type="text" data-testid="profile-name-input" value={name} id="name" name="name" pattern="^[a-zA-Z]{12,40}$" onChange={(e) => setName(e.target.value)} required />
         <label htmlFor="email">Email</label>
-        <input type="email" data-testid="profile-email-input" value={data.response.email} id="email" name="email" readOnly />
+        <input type="email" data-testid="profile-email-input" value={data.email} id="email" name="email" readOnly />
         <button data-testid="profile-save-btn" disabled={(name === firstName)}>Salvar</button>
       </form>
     </div>
