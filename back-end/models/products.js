@@ -1,5 +1,5 @@
 const conn = require('../connection');
-
+const getProducts = require('../service/getProducts');
 class Products {
   constructor(productId, name, price) {
     this.productId = productId;
@@ -7,14 +7,8 @@ class Products {
     this.price = price;
   }
 
-  static async getAllProducts() {
-    const query = 'SELECT * FROM trybeer.product;';
-    return new Promise((resolve, reject) => {
-      conn.query(query, (err, results) => {
-        if (err) return reject(err);
-        return resolve(results);
-      });
-    });
+  static async getAllProducts(email) {
+    return getProducts(email);
   }
 }
 

@@ -4,8 +4,10 @@ const Products = require('../models/products');
 
 const router = express.Router();
 
-const callBackAllProducts = (_req, res) =>
-  Products.allProducts().then(body => res.status(201).json(body));
+const callBackAllProducts = (req, res) => {
+  const { email } = req.user;
+  return Products.getAllProducts(email).then(body => res.status(201).json(body));
+}
 
 router.get('/', rescue(callBackAllProducts));
 

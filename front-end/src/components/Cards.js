@@ -46,7 +46,7 @@ const useStyles = makeStyles(theme => ({
 function Cards(props) {
   const classes = useStyles();
 
-  const { image, price, description, quantity, id } = props;
+  const { image, price, name, quantity, id } = props;
 
   return (
     <div>
@@ -56,13 +56,13 @@ function Cards(props) {
             <CardMedia
               className={classes.cardMedia}
               image={image}
-              title={description}
+              title={name}
             />
             <CardContent className={classes.cardContent}>
               <Typography gutterBottom variant='h5' component='h2'>
                 {price}
               </Typography>
-              <Typography>{description}</Typography>
+              <Typography>{name}</Typography>
             </CardContent>
             <CardActions>
               <Button size='small' color='primary'>
