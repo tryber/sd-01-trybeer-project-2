@@ -7,7 +7,7 @@ const generateForm = (param) => {
   return (
     <form onSubmit={(e) => sendData(e, { email, password, name, role },'user', setIsAdmin, setIsLoged)}>
       <label htmlFor="name">Nome</label>
-      <input type="text" data-testid="signup-name" id="name" name="name" pattern="^[a-zA-Z]{12,40}$" onChange={(e) => setName(e.target.value)} required />
+      <input type="text" data-testid="signup-name" id="name" name="name" pattern="^[a-zA-Z\s]{12,40}$" onChange={(e) => setName(e.target.value)} required />
       <label htmlFor="email">Email</label>
       <input type="email" data-testid="signup-email" id="email" name="email" onChange={(e) => setEmail(e.target.value)} required />
       <label htmlFor="password">Senha</label>
