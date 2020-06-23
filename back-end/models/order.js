@@ -1,17 +1,22 @@
 const conn = require('../connection');
 
 class Order {
-  constructor(street, number, cartId, finished) {
+  constructor(street, number, cartId, price, purchase_date, finished) {
     this.street = street;
     this.number = number;
     this.cartId = cartId;
+    this.price = price;
+    this.purchase_date = purchase_date;
     this.finished = finished;
   }
 
   async create() {
-    const { street, number, cartId, finished } = this;
+    const { street, number, finished, cartId, price, purchase_date } = this;
     if (!finished) this.finished = 0;
-    const query = `INSERT INTO purchase (street, number, cart_id, finished) VALUES ('${street}', '${number}', '${cartId}', '${this.finished}');`;
+
+    const query = `INSERT INTO purchase (street, number, cart_id, price, purchase_date, finished) VALUES
+      ('${street}', '${number}', '${cartId}', '${price}', '${purchase_date}', '${this.finished}');`;
+
     return new Promise((resolve, reject) => {
       conn.query(query, (err, _results) => {
         if (err) return reject(err);
@@ -31,7 +36,7 @@ class Order {
   }
 
   static async getUserOrders(email) {
-    const query = `SELECT * FROM purchase AS p
+    const query = `SELECT purchase_id, street, number, finished, price, purchase_date FROM purchase AS p
     INNER JOIN cart AS c ON c.cart_id = p.cart_id
     INNER JOIN user AS u ON u.user_id = c.user_id
     WHERE u.email = '${email}';`;
