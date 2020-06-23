@@ -1,21 +1,21 @@
 const conn = require('../connection');
 
 class Order {
-  constructor(street, number, cartId, price, purchase_date, finished) {
+  constructor(street, number, cartId, price, purchaseDate, finished) {
     this.street = street;
     this.number = number;
     this.cartId = cartId;
     this.price = price;
-    this.purchase_date = purchase_date;
+    this.purchaseDate = purchaseDate;
     this.finished = finished;
   }
 
   async create() {
-    const { street, number, finished, cartId, price, purchase_date } = this;
+    const { street, number, finished, cartId, price, purchaseDate } = this;
     if (!finished) this.finished = 0;
 
     const query = `INSERT INTO purchase (street, number, cart_id, price, purchase_date, finished) VALUES
-      ('${street}', '${number}', '${cartId}', '${price}', '${purchase_date}', '${this.finished}');`;
+      ('${street}', '${number}', '${cartId}', '${price}', '${purchaseDate}', '${this.finished}');`;
 
     return new Promise((resolve, reject) => {
       conn.query(query, (err, _results) => {
