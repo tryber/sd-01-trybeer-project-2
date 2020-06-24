@@ -29,11 +29,10 @@ const useStyles = makeStyles(theme => ({
   card: {
     height: '100%',
     display: 'flex',
-    width: '33%',
     flexDirection: 'column',
   },
   cardMedia: {
-    paddingTop: '90%',
+    paddingTop: '90%', // 16:9
   },
   cardContent: {
     flexGrow: 1,
@@ -50,7 +49,8 @@ function Cards(props) {
 
   return (
     <div>
-      {/* <Container className={classes.cardGrid} maxWidth='md'> */}
+      <Container className={classes.cardGrid} maxWidth='md'>
+        <Grid item key={id} xs={12} sm={6} md={4}>
           <Card className={classes.card}>
             <CardMedia
               className={classes.cardMedia}
@@ -73,7 +73,8 @@ function Cards(props) {
               </Button>
             </CardActions>
           </Card>
-      {/* </Container> */}
+        </Grid>
+      </Container>
     </div>
   );
 }
