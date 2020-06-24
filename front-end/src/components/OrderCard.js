@@ -22,7 +22,6 @@ const useStyles = makeStyles({
 function OrderCard({ order, isAdmin }) {
   const linkRoute = isAdmin ? '/admin' : '';
   const orderStatus = order.finished ? 'Entregue' : 'Pendente';
-  const adminPage = isAdmin ? true : false;
   const date = new Date(order.purchase_date);
   const purchaseDate = `${date.getDate()}/${date.getMonth()}`;
   const classes = useStyles();
@@ -43,7 +42,7 @@ function OrderCard({ order, isAdmin }) {
             {`R$ ${order.price}`}
           </Typography>
           <Typography component="p">
-            {adminPage && orderStatus}
+            {isAdmin !== 0 && orderStatus}
           </Typography>
         </CardActions>
       </CardActionArea>

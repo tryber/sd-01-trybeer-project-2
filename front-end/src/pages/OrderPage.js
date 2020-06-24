@@ -40,14 +40,11 @@ function OrderPage() {
   if (data.message || !user) return <Redirect to='/login'/>;
   if (!data) return <div>Loading...</div>;
   return (
-    <div>
-      <SideBar title="Pedidos" children={
-        <div className={classes.container}>
-          {sortData(data.map(order => <OrderCard key={order.purchase_id} order={order} isAdmin={user.role} />))}
-        </div>}
-      />
-      
-    </div>
+    <SideBar title="Pedidos" children={
+      <div className={classes.container}>
+        {sortData(data.map(order => <OrderCard key={order.purchase_id} order={order} isAdmin={user.role} />))}
+      </div>}
+    />
   );
 }
 
