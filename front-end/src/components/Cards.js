@@ -29,10 +29,11 @@ const useStyles = makeStyles(theme => ({
   card: {
     height: '100%',
     display: 'flex',
+    width: '33%',
     flexDirection: 'column',
   },
   cardMedia: {
-    paddingTop: '56.25%', // 16:9
+    paddingTop: '90%',
   },
   cardContent: {
     flexGrow: 1,
@@ -45,13 +46,11 @@ const useStyles = makeStyles(theme => ({
 
 function Cards(props) {
   const classes = useStyles();
-
-  const { image, price, name, quantity, id } = props;
+  const { image, price, name, id, quantity } = props;
 
   return (
     <div>
-      <Container className={classes.cardGrid} maxWidth='md'>
-        <Grid item key={id} xs={12} sm={6} md={4}>
+      {/* <Container className={classes.cardGrid} maxWidth='md'> */}
           <Card className={classes.card}>
             <CardMedia
               className={classes.cardMedia}
@@ -74,8 +73,7 @@ function Cards(props) {
               </Button>
             </CardActions>
           </Card>
-        </Grid>
-      </Container>
+      {/* </Container> */}
     </div>
   );
 }
