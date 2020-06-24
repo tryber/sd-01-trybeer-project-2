@@ -45,7 +45,7 @@ const useStyles = makeStyles(theme => ({
 
 function Cards(props) {
   const classes = useStyles();
-  const { image, price, name, id, quantity } = props;
+  const { image, price, name, id, quantity, func } = props;
 
   return (
     <div>
@@ -64,11 +64,11 @@ function Cards(props) {
               <Typography>{name}</Typography>
             </CardContent>
             <CardActions>
-              <Button size='small' color='primary'>
+              <Button size='small' color='primary' onClick={() => func(name, quantity + 1)}>
                 <RemoveCircleIcon />
               </Button>
               <span>{quantity}</span>
-              <Button size='small' color='primary'>
+              <Button size='small' color='primary' onClick={() => func(name, quantity - 1)}>
                 <AddCircleIcon />
               </Button>
             </CardActions>

@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS cart_products (
 );
 
 INSERT INTO product (name, price) VALUES
-('Skol Lata 250ml', '2.20'),
+('Skol Lata 350ml', '2.20'),
 ('Heineken 600ml', '7.50'),
 ('Antarctica Pilsen 300ml', '2.49'),
 ('Brahma 600ml', '7.50'),
@@ -85,3 +85,11 @@ BEGIN
 	END;
 END $$
 DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE getCartProducts(IN cartId INT)
+BEGIN
+	SELECT p.name, p.price, cp.quantity FROM cart_products AS cp
+    INNER JOIN product AS p ON p.product_id = cp.product_id
+    WHERE cart_id = cartId;
+END $$ DELIMITER ;

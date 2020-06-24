@@ -11,6 +11,19 @@ async function getProducts() {
     .then((result) => result);
 }
 
+async function submitProduct(productName, quantity) {
+  const token = JSON.parse(localStorage.getItem('user')).token;
+  await fetch('http://localhost:3001/products',
+    {
+      method: 'POST',
+      headers: {
+        authorization: token,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ productName, quantity })
+    });
+}
 function ProductsPage() {
   const [isLoged, setIsLoged] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -37,7 +50,9 @@ function ProductsPage() {
       price={product.price}
       name={product.name}
       quantity={product.quantity || 0}
-      image={`http://localhost:3001/${product.name}.jpg`} />)}
+      image={`http://localhost:3001/${product.name}.jpg`}
+      func={submitProduct}
+    />)}
   </div>
 }
 
