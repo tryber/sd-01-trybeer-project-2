@@ -24,36 +24,51 @@ async function submitProduct(productName, quantity) {
       body: JSON.stringify({ productName, quantity })
     });
 }
+
 function ProductsPage() {
   const [isLoged, setIsLoged] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
   const [data, setData] = useState('');
+  const [totalValue, setTotalValue] = useState(0);
 
   useEffect(() => {
     async function login() {
       const user = await validateLogin(setIsAdmin, setIsLoged);
       if (user) {
         const products = await getProducts();
+        setTotalValue(products.reduce((acc, value) => acc + (value.price * (value.quantity || 0)), 0))
         setData(products);
       }
     }
     login();
   }, []);
 
-  console.log(data);
   if (!isLoged) return <Redirect to='/login' />;
   if (isAdmin) return <Redirect to='/home' />;
   if (!data) return <div>Loading...</div>;
 
-  return <div className='products-container'>{data.map((product) =>
-    <Cards
-      price={product.price}
-      name={product.name}
-      quantity={product.quantity || 0}
-      image={`http://localhost:3001/${product.name}.jpg`}
-      func={submitProduct}
-    />)}
-  </div>
+  return (
+    <div>
+      <div className='products-container'>{data.map((product) =>
+        <Cards
+          price={product.price}
+          name={product.name}
+          quantity={product.quantity || 0}
+          image={`http://localhost:3001/${product.name}.jpg`}
+          func={submitProduct}
+          setTotal={{totalValue, setTotalValue}}
+        />)}
+      </div>
+      <div>
+        <button data-testid="checkout-bottom-btn">
+          <p>Ver carrinho</p>
+          <p data-testid="checkout-bottom-btn-value">
+            R${totalValue.toFixed(2)}
+          </p>
+        </button>
+      </div>
+    </div>
+  );
 }
 
 export default ProductsPage;

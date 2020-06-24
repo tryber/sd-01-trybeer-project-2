@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -32,7 +32,7 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
   },
   cardMedia: {
-    paddingTop: '90%', // 16:9
+    paddingTop: '90%',
   },
   cardContent: {
     flexGrow: 1,
@@ -43,9 +43,23 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+function updateTotalValue(setTotal, price, method) {
+  const { totalValue, setTotalValue } = setTotal;
+  method === 'add' ? setTotalValue(totalValue + price) : setTotalValue(totalValue - price);
+  return true;
+}
+
+function changeQuantity(name, qtt, func, setCurrentyQuantity, setTotal, price, method) {
+  if (qtt < 0) return null;
+  updateTotalValue(setTotal, price, method)
+  func(name, qtt);
+  setCurrentyQuantity(qtt)
+}
+
 function Cards(props) {
   const classes = useStyles();
-  const { image, price, name, id, quantity, func } = props;
+  const { image, price, name, id, quantity, func, setTotal } = props;
+  const [currentyQuantity, setCurrentyQuantity] = useState(quantity);
 
   return (
     <div>
@@ -56,19 +70,26 @@ function Cards(props) {
               className={classes.cardMedia}
               image={image}
               title={name}
+              data-testid={`${id}-product-img`}
             />
             <CardContent className={classes.cardContent}>
-              <Typography gutterBottom variant='h5' component='h2'>
-                {price}
+              <Typography gutterBottom variant='h5' component='h2' data-testid={`${id}-product-price`}>
+                R${price.toFixed(2)}
               </Typography>
-              <Typography>{name}</Typography>
+              <Typography data-testid={`${id}-product-name`}>{name}</Typography>
             </CardContent>
             <CardActions>
-              <Button size='small' color='primary' onClick={() => func(name, quantity + 1)}>
+              <Button size='small' color='primary'
+                data-testid={`${id}-product-minus`}
+                onClick={() => changeQuantity(name, currentyQuantity - 1, func, setCurrentyQuantity, setTotal, price, 'remove')
+                }>
                 <RemoveCircleIcon />
               </Button>
-              <span>{quantity}</span>
-              <Button size='small' color='primary' onClick={() => func(name, quantity - 1)}>
+              <span data-testid={`${id}-product-qtd`}>{currentyQuantity}</span>
+              <Button size='small' color='primary'
+                data-testid={`${id}-product-plus`}
+                onClick={() => changeQuantity(name, currentyQuantity + 1, func, setCurrentyQuantity, setTotal, price, 'add')
+                }>
                 <AddCircleIcon />
               </Button>
             </CardActions>
