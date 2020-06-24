@@ -31,15 +31,15 @@ function OrderCard({ order, isAdmin }) {
     <Card className={classes.root}>
       <CardActionArea href={`${linkRoute}/orders/${order.purchase_id}`}>
         <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
+          <Typography gutterBottom variant="h5" component="h2" data-testid={`${order.purchase_id}-order-number`}>
             {`Pedido ${order.purchase_id}`}
           </Typography>
-          <Typography className={classes.pos} color="textSecondary">
+          <Typography className={classes.pos} color="textSecondary" data-testid={`${order.purchase_id}-order-${isAdmin ? 'address' : 'date'}`}>
             {isAdmin ? `${order.street}, ${order.number}` : purchaseDate}
           </Typography>
         </CardContent>
         <CardActions className={classes.cardActions}>
-          <Typography variant="h5" component="p">
+          <Typography variant="h5" component="p" data-testid={`${order.purchase_id}-order-total-value`}>
             {`R$ ${order.price}`}
           </Typography>
           <Typography component="p">
