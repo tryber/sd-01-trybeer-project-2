@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import OrderCard from '../components/OrderCard';
+import SideBar from '../components/SideBar';
 
 async function getOrders(user, setData) {
   let url = 'http://localhost:3001/orders';
@@ -39,8 +40,13 @@ function OrderPage() {
   if (data.message || !user) return <Redirect to='/login'/>;
   if (!data) return <div>Loading...</div>;
   return (
-    <div className={classes.container}>
-      {sortData(data.map(order => <OrderCard key={order.id} order={order} isAdmin={user.role} />))}
+    <div>
+      <SideBar title="Pedidos" children={
+        <div className={classes.container}>
+          {sortData(data.map(order => <OrderCard key={order.purchase_id} order={order} isAdmin={user.role} />))}
+        </div>}
+      />
+      
     </div>
   );
 }
