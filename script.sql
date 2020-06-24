@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS cart_products (
 );
 
 INSERT INTO product (name, price) VALUES
-('Skol Lata 250ml', '2.20'),
+('Skol Lata 350ml', '2.20'),
 ('Heineken 600ml', '7.50'),
 ('Antarctica Pilsen 300ml', '2.49'),
 ('Brahma 600ml', '7.50'),

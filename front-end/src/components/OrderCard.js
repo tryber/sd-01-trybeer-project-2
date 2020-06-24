@@ -1,5 +1,21 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
+
+const useStyles = makeStyles({
+  root: {
+    maxWidth: 250,
+    margin: 20,
+  },
+  cardActions: {
+    display: 'flex',
+    justifyContent: 'space-around',
+  }
+});
 
 function OrderCard({ order, isAdmin }) {
   const linkRoute = isAdmin ? '/admin' : '';
@@ -7,18 +23,29 @@ function OrderCard({ order, isAdmin }) {
   const adminPage = isAdmin ? true : false;
   const date = new Date(order.purchase_date);
   const purchaseDate = `${date.getDate()}/${date.getMonth()}`;
+  const classes = useStyles();
 
   return (
-    <Link to={`${linkRoute}/orders/${order.purchase_id}`}>
-      <div>
-        <h3>{`Pedido ${order.purchase_id}`}</h3>
-        {adminPage && <p>{`${order.street}, ${order.number}`}</p>}
-        <div>
-          <p><strong>{`R$ ${order.price}`}</strong></p>
-          <p>{adminPage ? orderStatus : purchaseDate}</p>
-        </div>
-      </div>
-    </Link>
+    <Card className={classes.root}>
+      <CardActionArea href={`${linkRoute}/orders/${order.purchase_id}`}>
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="h2">
+            {`Pedido ${order.purchase_id}`}
+          </Typography>
+          <Typography className={classes.pos} color="textSecondary">
+            {isAdmin ? `${order.street}, ${order.number}` : purchaseDate}
+          </Typography>
+        </CardContent>
+        <CardActions className={classes.cardActions}>
+          <Typography variant="h5" component="p">
+            {`R$ ${order.price}`}
+          </Typography>
+          <Typography component="p">
+            {adminPage && orderStatus}
+          </Typography>
+        </CardActions>
+      </CardActionArea>
+    </Card>
   );
 }
 
