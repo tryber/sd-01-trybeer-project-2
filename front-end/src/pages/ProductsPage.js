@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
 import Cards from '../components/Cards';
 import { validateLogin } from '../service';
 import './ProductsPage.css';
@@ -11,10 +12,19 @@ async function getProducts() {
     .then((result) => result);
 }
 
+const useStyles = makeStyles(() => ({
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+}));
+
 function ProductsPage() {
   const [isLoged, setIsLoged] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
   const [data, setData] = useState('');
+
+  const classes = useStyles();
 
   useEffect(() => {
     async function login() {
@@ -32,7 +42,7 @@ function ProductsPage() {
   if (isAdmin) return <Redirect to='/home' />;
   if (!data) return <div>Loading...</div>;
 
-  return <div className='products-container'>{data.map((product) =>
+  return <div className={classes.container}>{data.map((product) =>
     <Cards
       price={product.price}
       name={product.name}

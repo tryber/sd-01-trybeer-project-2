@@ -1,81 +1,59 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 
 const useStyles = makeStyles(theme => ({
-  icon: {
-    marginRight: theme.spacing(2),
+  root: {
+    margin: theme.spacing(3),
+    padding: theme.spacing(2),
+    backgroundColor: 'lightgray',
+    width: theme.spacing(22),
+    maxHeight: theme.spacing(50),
   },
-  heroContent: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(8, 0, 6),
-  },
-  heroButtons: {
-    marginTop: theme.spacing(4),
-  },
-  cardGrid: {
-    paddingTop: theme.spacing(8),
-    paddingBottom: theme.spacing(8),
-  },
-  card: {
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  cardMedia: {
-    paddingTop: '90%', // 16:9
-  },
-  cardContent: {
-    flexGrow: 1,
-  },
-  footer: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(6),
+  media: {
+    width: theme.spacing(20),
+    height: theme.spacing(20),
   },
 }));
 
 function Cards(props) {
-  const classes = useStyles();
   const { image, price, name, id, quantity } = props;
+  const classes = useStyles();
+  const transformCurrency = currency =>
+    currency.toLocaleString('pt-BR', {
+      minimumFractionDigits: 2,
+      style: 'currency',
+      currency: 'BRL',
+    });
 
   return (
-    <div>
-      <Container className={classes.cardGrid} maxWidth='md'>
-        <Grid item key={id} xs={12} sm={6} md={4}>
-          <Card className={classes.card}>
-            <CardMedia
-              className={classes.cardMedia}
-              image={image}
-              title={name}
-            />
-            <CardContent className={classes.cardContent}>
-              <Typography gutterBottom variant='h5' component='h2'>
-                {price}
-              </Typography>
-              <Typography>{name}</Typography>
-            </CardContent>
-            <CardActions>
-              <Button size='small' color='primary'>
-                <RemoveCircleIcon />
-              </Button>
-              <span>{quantity}</span>
-              <Button size='small' color='primary'>
-                <AddCircleIcon />
-              </Button>
-            </CardActions>
-          </Card>
-        </Grid>
-      </Container>
-    </div>
+    <Card className={classes.root}>
+      <CardMedia id={id} className={classes.media} image={image} title={name} />
+      <CardContent>
+        <Typography gutterBottom variant="h5" component="h3">
+          {name}
+        </Typography>
+        <Typography variant="h6" color="textSecondary" component="h2">
+          {transformCurrency(price)}
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <Button size="small" color="primary">
+          <RemoveCircleIcon />
+        </Button>
+        <p>{quantity}</p>
+        <Button size="small" color="primary">
+          <AddCircleIcon />
+        </Button>
+      </CardActions>
+    </Card>
   );
 }
 
