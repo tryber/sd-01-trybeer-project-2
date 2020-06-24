@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
 import OrderCard from '../components/OrderCard';
 
 async function getOrders(user, setData) {
@@ -19,9 +20,17 @@ function sortData(data) {
   return data[0].props.isAdmin ? deliveredSort : dateSort;
 }
 
+const useStyles = makeStyles({
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  }
+});
+
 function OrderPage() {
   const [data, setData] = useState('');
   const user = JSON.parse(localStorage.getItem('user'));
+  const classes = useStyles();
 
   useEffect(() => {
     if (user) getOrders(user, setData);
@@ -30,7 +39,7 @@ function OrderPage() {
   if (data.message || !user) return <Redirect to='/login'/>;
   if (!data) return <div>Loading...</div>;
   return (
-    <div>
+    <div className={classes.container}>
       {sortData(data.map(order => <OrderCard key={order.id} order={order} isAdmin={user.role} />))}
     </div>
   );
