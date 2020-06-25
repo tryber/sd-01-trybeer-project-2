@@ -46,7 +46,6 @@ function ProfilePage() {
 
   if (data.message || !user) return <Redirect to='/login'/>;
   if (!data) return <div>Loading...</div>;
-  console.log(data)
   return (
     <div>
       <form onSubmit={(e) => submitData(e, name, user)}>

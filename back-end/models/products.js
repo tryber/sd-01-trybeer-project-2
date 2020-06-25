@@ -14,9 +14,7 @@ class Products {
   static async updateCart(email, productName, quantity) {
     const { data, id } = await getProductsInCart(email);
     if (data.map(each => each.name).includes(productName)) {
-      if (quantity === 0) {
-        return deleteBuy(productName, id);
-      }
+      if (quantity === 0) return deleteBuy(productName, id);
       return updateBuy(productName, quantity, id);
     }
     return createBuy(productName, id);
