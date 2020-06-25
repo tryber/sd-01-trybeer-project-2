@@ -63,7 +63,7 @@ const updateBuy = async (productName, quantity, id) => new Promise((resolve, rej
     });
 });
 
-const createBuy = async (productName, id) => await new Promise((resolve, reject) => {
+const createBuy = async (productName, id) => new Promise((resolve, reject) => {
   conn.query(
     `INSERT INTO cart_products
   (product_id, cart_id, quantity)
