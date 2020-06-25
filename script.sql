@@ -27,6 +27,8 @@ CREATE TABLE IF NOT EXISTS purchase (
   number INT NOT NULL,
   finished TINYINT(1) NOT NULL DEFAULT 0,
   cart_id INT NOT NULL,
+  price DOUBLE NOT NULL,
+  purchase_date DATE NOT NULL,
   FOREIGN KEY (cart_id) REFERENCES cart (cart_id)
 );
 
@@ -50,15 +52,6 @@ INSERT INTO product (name, price) VALUES
 ('Brahma Duplo Malte 350ml', '2.79'),
 ('Becks 600ml', '8.89'), ('Skol Beats Senses 269ml', '3.57'),
 ('Stella Artois 275ml', '3.49');
-
-DELIMITER $$
-CREATE PROCEDURE getUserFromPurchase(IN purchaseid INT)
-BEGIN
-	SELECT u.name FROM purchase as p
-	INNER JOIN cart as c ON p.cart_id = c.cart_id
-	INNER JOIN user as u ON u.user_id = c.user_id
-	WHERE p.purchase_id = purchaseid;
-END $$ DELIMITER ;
 
 DELIMITER $$
 CREATE FUNCTION getUserCart(userEmail VARCHAR(150))
@@ -89,7 +82,13 @@ DELIMITER ;
 DELIMITER $$
 CREATE PROCEDURE getCartProducts(IN cartId INT)
 BEGIN
+<<<<<<< HEAD
 	SELECT p.name, p.price, cp.quantity FROM cart_products AS cp
     INNER JOIN product AS p ON p.product_id = cp.product_id
     WHERE cart_id = cartId;
+=======
+  SELECT p.name, p.price, cp.quantity FROM cart_products AS cp
+  INNER JOIN product AS p ON p.product_id = cp.product_id
+  WHERE cart_id = cartId;
+>>>>>>> origin/retirando-bug-card-dougfunny
 END $$ DELIMITER ;

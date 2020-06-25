@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
 import Cards from '../components/Cards';
 import { validateLogin } from '../service';
 import './ProductsPage.css';
@@ -24,12 +25,20 @@ async function submitProduct(productName, quantity) {
       body: JSON.stringify({ productName, quantity })
     });
 }
+const useStyles = makeStyles(() => ({
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+}));
 
 function ProductsPage() {
   const [isLoged, setIsLoged] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
   const [data, setData] = useState('');
   const [totalValue, setTotalValue] = useState(0);
+
+  const classes = useStyles();
 
   useEffect(() => {
     async function login() {
@@ -49,7 +58,7 @@ function ProductsPage() {
 
   return (
     <div>
-      <div className='products-container'>{data.map((product) =>
+      <div className={classes.container}>{data.map((product) =>
         <Cards
           price={product.price}
           name={product.name}
