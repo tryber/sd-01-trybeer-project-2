@@ -54,6 +54,14 @@ INSERT INTO product (name, price) VALUES
 ('Stella Artois 275ml', '3.49');
 
 DELIMITER $$
+CREATE PROCEDURE getCartProducts(IN cartId INT)
+BEGIN
+	SELECT p.name, p.price, cp.quantity FROM cart_products AS cp
+  INNER JOIN product AS p ON p.product_id = cp.product_id
+  WHERE cart_id = cartId;
+END $$ DELIMITER ;
+
+DELIMITER $$
 CREATE FUNCTION getUserCart(userEmail VARCHAR(150))
 RETURNS INT DETERMINISTIC
 BEGIN
@@ -82,13 +90,7 @@ DELIMITER ;
 DELIMITER $$
 CREATE PROCEDURE getCartProducts(IN cartId INT)
 BEGIN
-<<<<<<< HEAD
-	SELECT p.name, p.price, cp.quantity FROM cart_products AS cp
-    INNER JOIN product AS p ON p.product_id = cp.product_id
-    WHERE cart_id = cartId;
-=======
   SELECT p.name, p.price, cp.quantity FROM cart_products AS cp
   INNER JOIN product AS p ON p.product_id = cp.product_id
   WHERE cart_id = cartId;
->>>>>>> origin/retirando-bug-card-dougfunny
 END $$ DELIMITER ;

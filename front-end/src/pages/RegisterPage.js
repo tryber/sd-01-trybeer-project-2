@@ -27,6 +27,10 @@ function RegisterPage() {
   const [name, setName] = useState('');
   const [role, setRole] = useState(false);
 
+  useEffect(() => {
+    validateLogin(setIsAdmin, setIsLoged);
+  }, []);
+
   if (isLoged && isAdmin) return <Redirect to='/admin/home' />;
   if (isLoged && !isAdmin) return <Redirect to='/products' />;
 

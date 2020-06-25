@@ -28,3 +28,7 @@ export async function sendData(event, data, url, setIsAdmin, setIsLoged) {
   if(result.role) setIsAdmin(true);
   setIsLoged(true);
 }
+
+export function userLogout() {
+  return localStorage.removeItem('user');
+}

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Redirect, Link } from 'react-router-dom';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -8,23 +9,17 @@ import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-
 import ViewListSharpIcon from '@material-ui/icons/ViewListSharp';
-
 import LocalBarSharpIcon from '@material-ui/icons/LocalBarSharp';
-
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-
 import ExitToAppTwoToneIcon from '@material-ui/icons/ExitToAppTwoTone';
-
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-
-const drawerWidth = 240;
+import { userLogout } from '../service';
 
 const listIcon = [
   <LocalBarSharpIcon />,
@@ -33,9 +28,15 @@ const listIcon = [
   <ExitToAppTwoToneIcon />,
 ];
 
-const headers = 'Algum Menu'
+const drawerWidth = 240;
+const user = JSON.parse(localStorage.getItem('user')) || '';
+const adminRoute = user.role ? '/admin' : '';
 
-const mock = ["Produtos", "Meus pedidos", "Meu Perfil", "Sair"]
+const mock = [['Produtos', 'products'], ['Meus pedidos', 'orders'], ['Meu Perfil', 'profile'], ['Sair', 'login']];
+if (user.role) {
+  mock[0] = '';
+  mock[1][0] = 'Pedidos';
+}
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -84,6 +85,7 @@ const useStyles = makeStyles(theme => ({
       duration: theme.transitions.duration.leavingScreen,
     }),
     marginLeft: -drawerWidth,
+    paddingTop: theme.spacing(3),
   },
   contentShift: {
     transition: theme.transitions.create('margin', {
@@ -92,9 +94,14 @@ const useStyles = makeStyles(theme => ({
     }),
     marginLeft: 0,
   },
+  link: {
+    textDecoration: 'none',
+    display: 'flex',
+    color: 'gray'
+  }
 }));
 
-export default function SideBar() {
+export default function SideBar({ children, title = 'TryBeer' }) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = useState(false);
@@ -106,7 +113,7 @@ export default function SideBar() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-
+  if (!user) return <Redirect to='/login'/>;
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -125,7 +132,7 @@ export default function SideBar() {
             <MenuIcon />
           </IconButton>
           <Typography variant='h6' noWrap>
-            {headers}
+            {title}
           </Typography>
         </Toolbar>
       </AppBar>
@@ -148,12 +155,17 @@ export default function SideBar() {
         </div>
 
         <List>
-          {mock.map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{listIcon[index]}</ListItemIcon>
-              <ListItemText primary={text} />
+          {mock.map((text, index) => {
+            return text[0] &&
+            <ListItem button key={text[0]} onClick={() => {
+                if (text[1] === 'login') userLogout();
+            }}>
+              <Link to={`${adminRoute}/${text[1]}`} className={classes.link}>
+                <ListItemIcon>{listIcon[index]}</ListItemIcon>
+                <ListItemText primary={text[0]} />
+              </Link>
             </ListItem>
-          ))}
+          })}
         </List>
       </Drawer>
       <main
@@ -161,8 +173,7 @@ export default function SideBar() {
           [classes.contentShift]: open,
         })}>
         <div className={classes.drawerHeader} />
-        <Typography paragraph>teste</Typography>
-        <Typography paragraph>teste</Typography>
+        {children}
       </main>
     </div>
   );
