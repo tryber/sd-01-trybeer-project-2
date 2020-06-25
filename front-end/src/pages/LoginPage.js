@@ -14,7 +14,7 @@ function LoginPage() {
   }, []);
 
   if (isLoged && isAdmin) return <Redirect to='/admin/home' />;
-  if (isLoged && !isAdmin) return <Redirect to='/cliente/products' />;
+  if (isLoged && !isAdmin) return <Redirect to='/products' />;
   if (shouldRedirect) return <Redirect to='/register' />;
 
   return (

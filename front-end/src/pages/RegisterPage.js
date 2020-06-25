@@ -32,7 +32,7 @@ function RegisterPage() {
   }, []);
 
   if (isLoged && isAdmin) return <Redirect to='/admin/home' />;
-  if (isLoged && !isAdmin) return <Redirect to='/cliente/products' />;
+  if (isLoged && !isAdmin) return <Redirect to='/products' />;
 
   const allProperties = { sendData, setIsLoged, setIsAdmin, email, setEmail, password, setPassword, name, setName, role, setRole };
   return (
