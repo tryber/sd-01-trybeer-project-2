@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import SideBar from '../components/SideBar';
 import { Redirect } from 'react-router-dom';
 
 async function submitData(event, name, user) {
@@ -39,7 +40,6 @@ function ProfilePage() {
   }
   const [savedName, setSavedName] = useState(firstName);
   const [name, setName] = useState(firstName);
-
   useEffect(() => {
     if (user) getUser(user, setData);
   }, []);
@@ -47,6 +47,7 @@ function ProfilePage() {
   if (data.message || !user) return <Redirect to='/login'/>;
   if (!data) return <div>Loading...</div>;
   return (
+    <SideBar title="Cliente - Meu perfil" children ={
     <div>
       <form onSubmit={(e) => submitData(e, name, user)}>
         <label htmlFor="name">Nome: </label>
@@ -56,6 +57,7 @@ function ProfilePage() {
         {!isAdmin && <button data-testid="profile-save-btn" onClick={() => setSavedName(name)} disabled={name === savedName}>Salvar</button>}
       </form>
     </div>
+    }/>
   );
 }
 
