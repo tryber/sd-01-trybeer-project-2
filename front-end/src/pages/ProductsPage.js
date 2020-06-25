@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Cards from '../components/Cards';
+import SideBar from '../components/SideBar';
 import { validateLogin } from '../service';
 import './ProductsPage.css';
 
@@ -30,7 +31,47 @@ const useStyles = makeStyles(() => ({
     display: 'flex',
     flexWrap: 'wrap',
   },
+  btnContainer: {
+    width: '70%',
+    margin: '0 auto',
+    textAlign: 'center',
+    backgroundColor: '#0fa36b'
+  },
+  btnLink: {
+    margin: '0, 25%, 0, 25%',
+    fontSize: '2em',
+    textDecoration: 'none',
+    color: 'white',
+    display: 'flex',
+    justifyContent: 'space-around',
+    flexDirection: 'row',
+  }
 }));
+
+function generateView(classes, data, totalValue, setTotalValue, submitProduct) {
+  return (
+    <div>
+      <div className={classes.container}>{data.map((product) =>
+        <Cards
+          price={product.price}
+          name={product.name}
+          quantity={product.quantity || 0}
+          image={`http://localhost:3001/${product.name}.jpg`}
+          func={submitProduct}
+          setTotal={{ totalValue, setTotalValue }}
+        />)}
+      </div>
+      <div className={classes.btnContainer}>
+        <Link className={classes.btnLink} to='/checkout' data-testid="checkout-bottom-btn">
+          <p>Ver carrinho</p>
+          <p data-testid="checkout-bottom-btn-value">
+            R${totalValue.toFixed(2)}
+          </p>
+        </Link>
+      </div>
+    </div>
+  );
+}
 
 function ProductsPage() {
   const [isLoged, setIsLoged] = useState(true);
@@ -57,26 +98,10 @@ function ProductsPage() {
   if (!data) return <div>Loading...</div>;
 
   return (
-    <div>
-      <div className={classes.container}>{data.map((product) =>
-        <Cards
-          price={product.price}
-          name={product.name}
-          quantity={product.quantity || 0}
-          image={`http://localhost:3001/${product.name}.jpg`}
-          func={submitProduct}
-          setTotal={{ totalValue, setTotalValue }}
-        />)}
-      </div>
+    <SideBar title="Cliente - Produtos" children={
       <div>
-        <button data-testid="checkout-bottom-btn">
-          <p>Ver carrinho</p>
-          <p data-testid="checkout-bottom-btn-value">
-            R${totalValue.toFixed(2)}
-          </p>
-        </button>
-      </div>
-    </div>
+        {generateView(classes, data, totalValue, setTotalValue, submitProduct)}
+      </div>} />
   );
 }
 

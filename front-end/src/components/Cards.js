@@ -12,7 +12,6 @@ import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 const useStyles = makeStyles(theme => ({
   root: {
     margin: theme.spacing(3),
-    padding: theme.spacing(2),
     backgroundColor: 'white',
     border: '1px solid black',
     width: theme.spacing(22),
@@ -32,7 +31,8 @@ function updateTotalValue(setTotal, price, method) {
   return true;
 }
 
-function changeQuantity(name, qtt, func, setCurrentyQuantity, setTotal, price, method) {
+function changeQuantity(props, qtt, setCurrentyQuantity, method) {
+  const { setTotal, price, name, func } = props;
   if (qtt < 0) return null;
   updateTotalValue(setTotal, price, method)
   func(name, qtt);
@@ -46,9 +46,30 @@ const transformCurrency = currency =>
     currency: 'BRL',
   });
 
+function returnButtons(props, currentyQuantity, setCurrentyQuantity) {
+  const { id } = props;
+  return (
+    <CardActions>
+      <Button size='small' color='primary'
+        data-testid={`${id}-product-minus`}
+        onClick={() => changeQuantity(props, currentyQuantity - 1, setCurrentyQuantity, 'remove')
+        }>
+        <RemoveCircleIcon />
+      </Button>
+      <span data-testid={`${id}-product-qtd`}>{currentyQuantity}</span>
+      <Button size='small' color='primary'
+        data-testid={`${id}-product-plus`}
+        onClick={() => changeQuantity(props, currentyQuantity + 1, setCurrentyQuantity, 'add')
+        }>
+        <AddCircleIcon />
+      </Button>
+    </CardActions>
+  );
+}
+
 function Cards(props) {
   const classes = useStyles();
-  const { image, price, name, id, quantity, func, setTotal } = props;
+  const { image, price, name, id, quantity } = props;
   const [currentyQuantity, setCurrentyQuantity] = useState(quantity);
 
   return (
@@ -63,21 +84,7 @@ function Cards(props) {
             {transformCurrency(price)}
           </Typography>
         </CardContent>
-        <CardActions>
-          <Button size='small' color='primary'
-            data-testid={`${id}-product-minus`}
-            onClick={() => changeQuantity(name, currentyQuantity - 1, func, setCurrentyQuantity, setTotal, price, 'remove')
-            }>
-            <RemoveCircleIcon />
-          </Button>
-          <span data-testid={`${id}-product-qtd`}>{currentyQuantity}</span>
-          <Button size='small' color='primary'
-            data-testid={`${id}-product-plus`}
-            onClick={() => changeQuantity(name, currentyQuantity + 1, func, setCurrentyQuantity, setTotal, price, 'add')
-            }>
-            <AddCircleIcon />
-          </Button>
-        </CardActions>
+        {returnButtons(props, currentyQuantity, setCurrentyQuantity)}
       </Card>
     </div>
   );
