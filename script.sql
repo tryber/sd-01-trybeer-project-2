@@ -86,11 +86,3 @@ BEGIN
 	END;
 END $$
 DELIMITER ;
-
-DELIMITER $$
-CREATE PROCEDURE getCartProducts(IN cartId INT)
-BEGIN
-  SELECT p.name, p.price, cp.quantity FROM cart_products AS cp
-  INNER JOIN product AS p ON p.product_id = cp.product_id
-  WHERE cart_id = cartId;
-END $$ DELIMITER ;
