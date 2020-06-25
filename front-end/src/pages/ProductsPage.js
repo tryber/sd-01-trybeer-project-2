@@ -4,7 +4,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Cards from '../components/Cards';
 import SideBar from '../components/SideBar';
 import { validateLogin } from '../service';
-import './ProductsPage.css';
 
 async function getProducts() {
   const token = JSON.parse(localStorage.getItem('user')).token;

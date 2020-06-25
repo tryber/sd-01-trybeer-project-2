@@ -19,6 +19,11 @@ class Products {
     }
     return createBuy(productName, id);
   }
+
+  static async getCart(email){
+    return getProductsInCart(email)
+  }
+  
 }
 
 module.exports = Products;
