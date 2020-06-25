@@ -31,3 +31,10 @@ export async function sendData(event, data, url, setIsAdmin, setIsLoged) {
 export function userLogout() {
   return localStorage.removeItem('user');
 }
+
+export const transformCurrency = currency =>
+  currency.toLocaleString('pt-BR', {
+    minimumFractionDigits: 2,
+    style: 'currency',
+    currency: 'BRL',
+  });

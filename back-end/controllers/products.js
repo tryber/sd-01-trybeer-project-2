@@ -4,7 +4,7 @@ const Products = require('../models/products');
 
 const router = express.Router();
 
-const callBackAllProducts = (req, res) => {
+const allProducts = (req, res) => {
   const { email } = req.user;
   return Products.getAllProducts(email).then(body => res.status(201).json(body));
 };
@@ -16,7 +16,15 @@ const updateCart = async (req, res) => {
   return res.status(200).json(update);
 };
 
-router.get('/', rescue(callBackAllProducts));
+const checkout = async (req, res) => {
+  const { email } = req.user;
+  const productsCheckout = await Products.getCart(email);
+  return res.status(200).json(productsCheckout);
+}
+
+router.get('/checkout', rescue(checkout))
+
+router.get('/', rescue(allProducts));
 
 router.post('/', rescue(updateCart));
 

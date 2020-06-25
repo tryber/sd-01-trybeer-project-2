@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
+import { transformCurrency } from '../service';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -39,12 +40,7 @@ function changeQuantity(props, qtt, setCurrentyQuantity, method) {
   setCurrentyQuantity(qtt)
 }
 
-const transformCurrency = currency =>
-  currency.toLocaleString('pt-BR', {
-    minimumFractionDigits: 2,
-    style: 'currency',
-    currency: 'BRL',
-  });
+
 
 function returnButtons(props, currentyQuantity, setCurrentyQuantity) {
   const { id } = props;

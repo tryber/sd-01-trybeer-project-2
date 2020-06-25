@@ -5,6 +5,7 @@ import RegisterPage from './pages/RegisterPage';
 import ProfilePage from './pages/ProfilePage';
 import ProductsPage from './pages/ProductsPage';
 import OrderPage from './pages/OrderPage';
+import Checkout from './pages/Checkout';
 
 function App() {
   return (
@@ -19,6 +20,8 @@ function App() {
           <Route path='/admin/profile' component={ProfilePage} />
           <Route path='/orders' component={OrderPage} />
           <Route path='/admin/orders' component={OrderPage} />
+          <Route path='/checkout' component={Checkout} />
+          <Route path='/admin/checkout' component={Checkout} />
         </Switch>
       </BrowserRouter>
     </div>
