@@ -13,7 +13,7 @@ function LoginPage() {
     validateLogin(setIsAdmin, setIsLoged);
   }, []);
 
-  if (isLoged && isAdmin) return <Redirect to='/admin/home' />;
+  if (isLoged && isAdmin) return <Redirect to='/home' />;
   if (isLoged && !isAdmin) return <Redirect to='/products' />;
   if (shouldRedirect) return <Redirect to='/register' />;
 

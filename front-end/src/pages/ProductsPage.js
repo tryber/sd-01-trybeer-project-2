@@ -53,6 +53,7 @@ function generateView(classes, data, totalValue, setTotalValue, submitProduct) {
     <div>
       <div className={classes.container}>{data.map((product) =>
         <Cards
+          key={product.name}
           price={product.price}
           name={product.name}
           quantity={product.quantity || 0}

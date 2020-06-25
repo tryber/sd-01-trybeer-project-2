@@ -12,7 +12,6 @@ export async function validateLogin(setIsAdmin, setIsLoged) {
 }
 
 export async function sendData(event, data, url, setIsAdmin, setIsLoged) {
-  event.preventDefault();
   const result = await fetch(`http://localhost:3001/${url}`,
     {
       method: 'POST',
