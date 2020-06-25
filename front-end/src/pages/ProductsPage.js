@@ -56,7 +56,7 @@ function ProductsPage() {
           quantity={product.quantity || 0}
           image={`http://localhost:3001/${product.name}.jpg`}
           func={submitProduct}
-          setTotal={{totalValue, setTotalValue}}
+          setTotal={{ totalValue, setTotalValue }}
         />)}
       </div>
       <div>
