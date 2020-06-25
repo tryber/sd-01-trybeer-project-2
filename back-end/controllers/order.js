@@ -5,8 +5,8 @@ const Order = require('../models/order');
 const router = express.Router();
 
 const createOrder = async (req, res) => {
-  const { street, number, cart_id } = req.body;
-  const order = new Order(street, number, cart_id);
+  const { street, number, cart_id, price, purchase_date: purchaseDate, finished } = req.body;
+  const order = new Order(street, number, cart_id, price, purchaseDate, finished);
   return order.create().then(response => res.status(201).json(response));
 };
 

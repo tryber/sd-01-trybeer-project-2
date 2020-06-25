@@ -27,6 +27,8 @@ CREATE TABLE IF NOT EXISTS purchase (
   number INT NOT NULL,
   finished TINYINT(1) NOT NULL DEFAULT 0,
   cart_id INT NOT NULL,
+  price DOUBLE NOT NULL,
+  purchase_date DATE NOT NULL,
   FOREIGN KEY (cart_id) REFERENCES cart (cart_id)
 );
 
@@ -40,7 +42,7 @@ CREATE TABLE IF NOT EXISTS cart_products (
 );
 
 INSERT INTO product (name, price) VALUES
-('Skol Lata 250ml', '2.20'),
+('Skol Lata 350ml', '2.20'),
 ('Heineken 600ml', '7.50'),
 ('Antarctica Pilsen 300ml', '2.49'),
 ('Brahma 600ml', '7.50'),
@@ -52,12 +54,11 @@ INSERT INTO product (name, price) VALUES
 ('Stella Artois 275ml', '3.49');
 
 DELIMITER $$
-CREATE PROCEDURE getUserFromPurchase(IN purchaseid INT)
+CREATE PROCEDURE getCartProducts(IN cartId INT)
 BEGIN
-	SELECT u.name FROM purchase as p
-	INNER JOIN cart as c ON p.cart_id = c.cart_id
-	INNER JOIN user as u ON u.user_id = c.user_id
-	WHERE p.purchase_id = purchaseid;
+	SELECT p.name, p.price, cp.quantity FROM cart_products AS cp
+  INNER JOIN product AS p ON p.product_id = cp.product_id
+  WHERE cart_id = cartId;
 END $$ DELIMITER ;
 
 DELIMITER $$
