@@ -78,7 +78,7 @@ function ProductsPage() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [data, setData] = useState('');
   const [totalValue, setTotalValue] = useState(0);
-
+  const user = JSON.parse(localStorage.getItem('user')) || '';
   const classes = useStyles();
 
   useEffect(() => {
@@ -94,7 +94,8 @@ function ProductsPage() {
   }, []);
 
   if (!isLoged) return <Redirect to='/login' />;
-  if (isAdmin) return <Redirect to='/home' />;
+  if (isAdmin) return <Redirect to='/admin/orders' />;
+  if (user.role) return <Redirect to='/admin/orders' />;
   if (!data) return <div>Loading...</div>;
 
   return (

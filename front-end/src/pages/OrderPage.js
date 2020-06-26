@@ -39,10 +39,11 @@ function OrderPage() {
 
   if (data.message || !user) return <Redirect to='/login'/>;
   if (!data) return <div>Loading...</div>;
+  console.log(user)
   return (
     <SideBar title="Pedidos" children={
       <div className={classes.container}>
-        {sortData(data.map(order => <OrderCard key={order.purchase_id} order={order} isAdmin={user.role} />))}
+        {!data.length === 0  && sortData(data.map(order => <OrderCard key={order.purchase_id} order={order} isAdmin={user.role} />))}
       </div>}
     />
   );

@@ -31,7 +31,7 @@ function RegisterPage() {
     validateLogin(setIsAdmin, setIsLoged);
   }, []);
 
-  if (isLoged && isAdmin) return <Redirect to='/admin/home' />;
+  if (isLoged && isAdmin) return <Redirect to='/admin/orders' />;
   if (isLoged && !isAdmin) return <Redirect to='/products' />;
 
   const allProperties = { sendData, setIsLoged, setIsAdmin, email, setEmail, password, setPassword, name, setName, role, setRole };
