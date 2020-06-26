@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -12,23 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
-export async function sendData (event) {
-    event.preventDefault();
-    const url = 'http://localhost:3001/products/checkout'
-    return fetch(url,
-      {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        // body: JSON.stringify(data)
-      })
-      .then(res => res.json());
-  }
-  
-
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
@@ -40,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: '100%',
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -48,45 +32,56 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Address() {
-// const [adreess, setAdreess] = useState('');
-// const [number, setNumber] = useState('');
+function handleSubmit(e, setCheckout, address, number ) {
+  e.preventDefault();
+  setCheckout([address, number]);
+}
+
+export default function Address({ setCheckout }) {
+  const [address, setAddress] = useState('');
+  const [number, setNumber] = useState('');
   const classes = useStyles();
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component='main' maxWidth='xs'>
       <CssBaseline />
-      <div className={classes.paper}>    
-        <Typography component="h1" variant="h5">
+      <div className={classes.paper}>
+        <Typography component='h1' variant='h5'>
           Endereço
         </Typography>
-        <form className={classes.form} onSubmit={(event) => sendData(event)}>
+        <form
+          className={classes.form}
+          onSubmit={e => handleSubmit(e, setCheckout, address, number)}>
           <TextField
-            variant="outlined"
-            margin="normal"
+            multiline
+            variant='outlined'
+            margin='normal'
             required
             fullWidth
-            id="adreess"
-            label="Rua:"
+            id='adreess'
+            label='Rua:'
             autoFocus
+            value={address}
+            onChange={event => setAddress(event.target.value)}
           />
           <TextField
-            variant="outlined"
-            margin="normal"
+            variant='outlined'
+            margin='normal'
             required
             fullWidth
-            name="password"
-            label="Número"
-            id="number"
+            label='Número'
+            id='number'
+            type='number'
             autoFocus
+            value={number}
+            onChange={event => setNumber(event.target.value)}
           />
           <Button
-            type="submit"
+            type='submit'
             fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
+            variant='contained'
+            color='primary'
+            className={classes.submit}>
             Finalizar Pedido
           </Button>
         </form>
