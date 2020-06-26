@@ -47,7 +47,7 @@ function ProfilePage() {
   if (data.message || !user) return <Redirect to='/login'/>;
   if (!data) return <div>Loading...</div>;
   return (
-    <SideBar title="Meu perfil" children ={
+    <SideBar title="Meu perfil" children={
     <div>
       <form onSubmit={(e) => submitData(e, name, user)}>
         <label htmlFor="name">Nome: </label>

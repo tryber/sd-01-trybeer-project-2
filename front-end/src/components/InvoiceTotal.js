@@ -46,7 +46,7 @@ function constructorTableCell(data, {cels}) {
   ));
 }
 
-function InvoiceTotal(props) {  
+function InvoiceTotal(props) {
   const classes = useStyles();
   const { data } = props;
   return (

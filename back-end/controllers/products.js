@@ -20,9 +20,9 @@ const checkout = async (req, res) => {
   const { email } = req.user;
   const productsCheckout = await Products.getCart(email);
   return res.status(200).json(productsCheckout);
-}
+};
 
-router.get('/checkout', rescue(checkout))
+router.get('/checkout', rescue(checkout));
 
 router.get('/', rescue(allProducts));
 

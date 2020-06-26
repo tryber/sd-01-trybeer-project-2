@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -13,20 +13,18 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
 export async function sendData (event) {
-    event.preventDefault();
-    const url = 'http://localhost:3001/products/checkout'
-    return fetch(url,
-      {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        // body: JSON.stringify(data)
-      })
-      .then(res => res.json());
-  }
-  
+  event.preventDefault();
+  const url = 'http://localhost:3001/products/checkout'
+  return fetch(url,
+    {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      // body: JSON.stringify(data)
+    }).then(res => res.json());
+}
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -56,7 +54,7 @@ export default function Address() {
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
-      <div className={classes.paper}>    
+      <div className={classes.paper}>
         <Typography component="h1" variant="h5">
           Endereço
         </Typography>
