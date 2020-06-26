@@ -94,10 +94,8 @@ function ProductsPage() {
   }, []);
 
   if (!isLoged) return <Redirect to='/login' />;
-  if (isAdmin) return <Redirect to='/admin/orders' />;
-  if (user.role) return <Redirect to='/admin/orders' />;
+  if (isAdmin || user.role) return <Redirect to='/admin/orders' />;
   if (!data) return <div>Loading...</div>;
-
   return (
     <SideBar title="Cliente - Produtos" children={
       <div>

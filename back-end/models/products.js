@@ -21,7 +21,7 @@ class Products {
   }
 
   static async getCart(email) {
-    return getProductsInCart(email)
+    return getProductsInCart(email);
   }
 }
 
