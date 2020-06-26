@@ -1,4 +1,4 @@
-const { getProducts, getProductsInCart, deleteBuy, updateBuy, createBuy } = require('../service/getProducts');
+const { getProducts, getProductsInCart, deleteBuy, updateBuy, createBuy, cartId } = require('../service/getProducts');
 
 class Products {
   constructor(productId, name, price) {
@@ -20,10 +20,14 @@ class Products {
     return createBuy(productName, id);
   }
 
-  static async getCart(email){
+  static async getCart(email) {
     return getProductsInCart(email)
   }
-  
+
+  static async deleteProduct(name, email) {
+    const id = await cartId(email);
+    return deleteBuy(name, id);
+  }
 }
 
 module.exports = Products;
