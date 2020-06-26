@@ -86,7 +86,7 @@ function ProductsPage() {
       const user = await validateLogin(setIsAdmin, setIsLoged);
       if (user) {
         const products = await getProducts();
-        setTotalValue(products.reduce((acc, value) => acc + (value.price * (value.quantity || 0)), 0))
+        setTotalValue(products.reduce((acc, value) => acc + (value.price * (value.quantity || 0)), 0));
         setData(products);
       }
     }
@@ -98,9 +98,8 @@ function ProductsPage() {
   if (!data) return <div>Loading...</div>;
   return (
     <SideBar title="Cliente - Produtos" children={
-      <div>
-        {generateView(classes, data, totalValue, setTotalValue, submitProduct)}
-      </div>} />
+      generateView(classes, data, totalValue, setTotalValue, submitProduct)
+    } />
   );
 }
 
