@@ -80,4 +80,4 @@ const createBuy = async (productName, id) => new Promise((resolve, reject) => {
     });
 });
 
-module.exports = { getProducts, getProductsInCart, deleteBuy, updateBuy, createBuy };
+module.exports = { getProducts, getProductsInCart, deleteBuy, updateBuy, createBuy, cartId };
