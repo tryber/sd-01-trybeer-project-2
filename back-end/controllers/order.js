@@ -1,6 +1,7 @@
 const express = require('express');
 const rescue = require('../rescue');
 const Order = require('../models/order');
+const Products = require('../models/products');
 
 const router = express.Router();
 
@@ -18,8 +19,11 @@ const userOrders = async (req, res) => {
 };
 
 const orderDetails = async (req, res) => {
+  const { email } = req.user;
   const orderId = req.params.id;
-  return Order.getDetails(orderId).then(response => res.status(200).json(response));
+  const order = await Order.getDetails(orderId);
+  const cartProducts = await Products.getCart(email, order.cart_id);
+  return res.status(200).json({ ...order, products: cartProducts.data });
 };
 
 const updateOrderState = async (req, res) => {

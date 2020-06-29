@@ -20,8 +20,8 @@ class Products {
     return createBuy(productName, id);
   }
 
-  static async getCart(email) {
-    return getProductsInCart(email);
+  static async getCart(email, cartId) {
+    return getProductsInCart(email, cartId);
   }
 }
 
