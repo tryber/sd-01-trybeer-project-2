@@ -20,10 +20,10 @@ async function updateStatus(user, id, setShowButton) {
 }
 
 function renderProducts(products, classes) {
-  products.map((product, index) => {
+  return products.map((product, index) => {
     const { quantity, name, price } = product;
     return (
-      <p className={classes.product}>
+      <p className={classes.product} key={name}>
         <span>
           <span data-testid={`${index}-product-qtd`}>{quantity}</span>
           {' - '}
