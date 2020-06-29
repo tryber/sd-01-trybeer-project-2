@@ -19,6 +19,22 @@ async function updateStatus(user, id, setShowButton) {
   if (res.message === 'Pedido entregue com sucesso!') setShowButton(false);
 }
 
+function renderProducts(products) {
+  products.map((product, index) => {
+    const { quantity, name, price } = product;
+    return (
+      <p className={classes.product}>
+        <span>
+          <span data-testid={`${index}-product-qtd`}>{quantity}</span>
+          {' - '}
+          <span data-testid={`${index}-product-name`}>{name}</span>
+        </span>
+        <span data-testid={`${index}-product-total-value`}>R$ {price * quantity}</span>
+      </p>
+    );
+  })
+}
+
 const useStyles = makeStyles({
   container: {
     border: '1px solid black',
@@ -53,31 +69,19 @@ function OrderDetails(props) {
 
   if (data.message || !user) return <Redirect to='/login'/>;
   if (!data) return <div>Loading...</div>;
-  
+
   const { finished, price, purchase_date, products } = data;
   const status = finished ? 'Entregue' : 'Pendente';
   const date = new Date(purchase_date);
   const purchaseDate = `${date.getDate()}/${date.getMonth()}`;
   const testid = user.role ? 'order-status' : 'order-date';
-  
+
   return (
     <SideBar title={`Detalhes - Pedido ${id}`} children={
       <div>
         <h1>Pedido <span data-testid="order-number">{id}</span> - <span data-testid={testid}>{user.role ? status : purchaseDate}</span></h1>
         <div className={classes.container}>
-          {products.map((product, index) => {
-            const { quantity, name, price } = product;
-            return (
-              <p className={classes.product}>
-                <span>
-                  <span data-testid={`${index}-product-qtd`}>{quantity}</span>
-                  {' - '}
-                  <span data-testid={`${index}-product-name`}>{name}</span>
-                </span>
-                <span data-testid={`${index}-product-total-value`}>R$ {price * quantity}</span>
-              </p>
-            );
-          })}
+          {renderProducts(products)}
           <h1 className={classes.totalPrice}>Total: <span data-testid="order-total-value">R$ {price}</span></h1>
         </div>
         {!finished && <button data-testid="mark-as-delivered-btn" onClick={() => updateStatus(user, id, setShowButton)}>Marcar como Entregue</button>}
