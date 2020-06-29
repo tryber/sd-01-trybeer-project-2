@@ -31,7 +31,7 @@ function handleSubmit(e, setCheckout, address, number) {
   setCheckout([address, number]);
 }
 
-function selectTextField(value, set) {
+function selectTextField(label, value, set) {
   return (
     <TextField
       multiline
@@ -40,7 +40,7 @@ function selectTextField(value, set) {
       required
       fullWidth
       id='adreess'
-      label='Rua:'
+      label={label}
       autoFocus
       value={value}
       onChange={event => set(event.target.value)}
@@ -62,8 +62,8 @@ export default function Address({ setCheckout }) {
         <form
           className={classes.form}
           onSubmit={e => handleSubmit(e, setCheckout, address, number)}>
-          {selectTextField(address, setAddress)}
-          {selectTextField(number, setNumber)}
+          {selectTextField('Rua:', address, setAddress)}
+          {selectTextField('Numero:', number, setNumber)}
           <Button
             type='submit'
             fullWidth
