@@ -2,12 +2,6 @@ import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-// import FormControlLabel from '@material-ui/core/FormControlLabel';
-// import Checkbox from '@material-ui/core/Checkbox';
-// import Link from '@material-ui/core/Link';
-// import Grid from '@material-ui/core/Grid';
-// import Box from '@material-ui/core/Box';
-// import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -32,16 +26,32 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function handleSubmit(e, setCheckout, address, number ) {
+function handleSubmit(e, setCheckout, address, number) {
   e.preventDefault();
   setCheckout([address, number]);
+}
+
+function selectTextField(value, set) {
+  return (
+    <TextField
+      multiline
+      variant='outlined'
+      margin='normal'
+      required
+      fullWidth
+      id='adreess'
+      label='Rua:'
+      autoFocus
+      value={value}
+      onChange={event => set(event.target.value)}
+    />
+  );
 }
 
 export default function Address({ setCheckout }) {
   const [address, setAddress] = useState('');
   const [number, setNumber] = useState('');
   const classes = useStyles();
-
   return (
     <Container component='main' maxWidth='xs'>
       <CssBaseline />
@@ -52,30 +62,8 @@ export default function Address({ setCheckout }) {
         <form
           className={classes.form}
           onSubmit={e => handleSubmit(e, setCheckout, address, number)}>
-          <TextField
-            multiline
-            variant='outlined'
-            margin='normal'
-            required
-            fullWidth
-            id='adreess'
-            label='Rua:'
-            autoFocus
-            value={address}
-            onChange={event => setAddress(event.target.value)}
-          />
-          <TextField
-            variant='outlined'
-            margin='normal'
-            required
-            fullWidth
-            label='Número'
-            id='number'
-            type='number'
-            autoFocus
-            value={number}
-            onChange={event => setNumber(event.target.value)}
-          />
+          {selectTextField(address, setAddress)}
+          {selectTextField(number, setNumber)}
           <Button
             type='submit'
             fullWidth
