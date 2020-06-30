@@ -43,7 +43,6 @@ function ProfilePage() {
   useEffect(() => {
     if (user) getUser(user, setData);
   }, []);
-
   if (data.message || !user) return <Redirect to='/login'/>;
   if (!data) return <div>Loading...</div>;
   return (

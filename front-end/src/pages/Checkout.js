@@ -5,22 +5,13 @@ import InvoiceTotal from '../components/InvoiceTotal';
 import Address from '../components/Address';
 import { getOrders, sendAddress } from '../service'
 
-
-
 function Checkout() {
   const [data, setData] = useState('');
   const [checkout, setCheckout] = useState('');
-  const [price, setPrice] = useState('');
-  
-  console.log('que porra tem aqui?', checkout)
-
   const user = JSON.parse(localStorage.getItem('user'));
-
-  
   useEffect(() => {
     getOrders(user, setData);
   }, []);
-  
   useEffect(() => {
     const invoice = { 
       purchase_date: Date.now(),
@@ -29,9 +20,7 @@ function Checkout() {
     }
     sendAddress(invoice);
   }, [checkout]);
-
   if (!data) return <Loading />;
-
   return (
     <div>
       <SideBar
