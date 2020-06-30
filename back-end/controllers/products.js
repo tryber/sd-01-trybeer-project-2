@@ -6,7 +6,9 @@ const router = express.Router();
 
 const allProducts = (req, res) => {
   const { email } = req.user;
-  return Products.getAllProducts(email).then(body => res.status(201).json(body));
+  return Products.getAllProducts(email).then(body =>
+    res.status(201).json(body),
+  );
 };
 
 const updateCart = async (req, res) => {
@@ -20,7 +22,7 @@ const checkout = async (req, res) => {
   const { email } = req.user;
   const productsCheckout = await Products.getCart(email);
   return res.status(200).json(productsCheckout);
-}
+};
 
 router.get('/checkout', rescue(checkout));
 
