@@ -30,6 +30,18 @@ function testId(type, isAdmin) {
   return 'profile-email-input';
 }
 
+function inputForms(setName, name, isAdmin, savedName, setSavedName) {
+  return (
+    <form onSubmit={(e) => submitData(e, name, user)}>
+      <label htmlFor="name">Nome: </label>
+      <input type="text" data-testid={testId('name', isAdmin)} value={name} id="name" name="name" pattern="^[a-zA-Z\s]{12,40}$" onChange={(e) => setName(e.target.value)} readOnly={isAdmin} required />
+      <label htmlFor="email">Email: </label>
+      <input type="email" data-testid={testId('email', isAdmin)} value={data.email} id="email" name="email" readOnly />
+      {!isAdmin && <button data-testid="profile-save-btn" onClick={() => setSavedName(name)} disabled={name === savedName}>Salvar</button>}
+    </form>
+  );
+}
+
 function ProfilePage() {
   const [data, setData] = useState('');
   const user = JSON.parse(localStorage.getItem('user'));
@@ -48,13 +60,7 @@ function ProfilePage() {
   return (
     <SideBar title="Cliente - Meu perfil" children={
     <div>
-      <form onSubmit={(e) => submitData(e, name, user)}>
-        <label htmlFor="name">Nome: </label>
-        <input type="text" data-testid={testId('name', isAdmin)} value={name} id="name" name="name" pattern="^[a-zA-Z\s]{12,40}$" onChange={(e) => setName(e.target.value)} readOnly={isAdmin} required />
-        <label htmlFor="email">Email: </label>
-        <input type="email" data-testid={testId('email', isAdmin)} value={data.email} id="email" name="email" readOnly />
-        {!isAdmin && <button data-testid="profile-save-btn" onClick={() => setSavedName(name)} disabled={name === savedName}>Salvar</button>}
-      </form>
+      {inputForms(setName, name, isAdmin, savedName, setSavedName)}
     </div>
     }/>
   );

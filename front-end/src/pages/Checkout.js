@@ -5,6 +5,19 @@ import InvoiceTotal from '../components/InvoiceTotal';
 import Address from '../components/Address';
 import { getOrders, sendAddress } from '../service';
 
+function sideBar(data) {
+  return (
+    <SideBar
+      title='Cliente - Checkout'
+      children={
+        <div>
+          <InvoiceTotal data={data} />
+        </div>
+      }
+    />
+  );
+}
+
 function Checkout() {
   const [data, setData] = useState('');
   const [checkout, setCheckout] = useState('');
@@ -23,14 +36,7 @@ function Checkout() {
   if (!data) return <Loading />;
   return (
     <div>
-      <SideBar
-        title='Cliente - Checkout'
-        children={
-          <div>
-            <InvoiceTotal data={data} />
-          </div>
-        }
-      />
+      {sideBar(data)}
       <br />
       <div>
         <Address setCheckout={setCheckout} />
