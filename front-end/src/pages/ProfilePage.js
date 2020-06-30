@@ -30,6 +30,7 @@ function testId(type, isAdmin) {
   if (type === 'name') return 'profile-name-input';
   return 'profile-email-input';
 }
+
 function inputName(isAdmin, name, setName) {
   return (
     <input
