@@ -1,14 +1,14 @@
 const conn = require('../connection');
 
-const cartId = async email => new Promise((resolve, reject) => {
+const getCartId = async email => new Promise((resolve, reject) => {
   conn.query(`SELECT getUserCart("${email}")`, (err, results) => {
     if (err) return reject(err);
     return resolve(results[0][`getUserCart("${email}")`]);
   });
 });
 
-const getProductsInCart = async (email) => {
-  const id = await cartId(email);
+const getProductsInCart = async (email, cartId) => {
+  const id = cartId || await getCartId(email);
   return {
     data: await new Promise((resolve, reject) => {
       conn.query(`CALL getCartProducts(${id})`, (err, results) => {

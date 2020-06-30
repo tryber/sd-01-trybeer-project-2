@@ -29,7 +29,7 @@ const deleteProductCart = async (req, res) => {
   res.status(200).json(deleteProduct);
 };
 
-router.get('/checkout', rescue(checkout))
+router.get('/checkout', rescue(checkout));
 
 router.get('/', rescue(allProducts));
 

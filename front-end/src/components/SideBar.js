@@ -159,7 +159,7 @@ export default function SideBar({ children, title = 'TryBeer' }) {
           {mock.map((text, index) => {
             return text[0] &&
             <ListItem button key={text[0]} onClick={() => {
-                if (text[1] === 'login') userLogout();
+                if (text[1] === 'login') return userLogout();
             }}>
               <Link to={`${adminRoute}/${text[1]}`} className={classes.link}>
                 <ListItemIcon>{listIcon[index]}</ListItemIcon>
