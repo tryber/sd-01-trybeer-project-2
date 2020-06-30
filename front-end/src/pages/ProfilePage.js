@@ -30,7 +30,7 @@ function testId(type, isAdmin) {
   return 'profile-email-input';
 }
 
-function inputForms(setName, name, isAdmin, savedName, setSavedName) {
+function inputForms(user, setName, name, isAdmin, savedName, setSavedName, data) {
   return (
     <form onSubmit={(e) => submitData(e, name, user)}>
       <label htmlFor="name">Nome: </label>
@@ -60,7 +60,7 @@ function ProfilePage() {
   return (
     <SideBar title="Cliente - Meu perfil" children={
     <div>
-      {inputForms(setName, name, isAdmin, savedName, setSavedName)}
+      {inputForms(user, setName, name, isAdmin, savedName, setSavedName, data)}
     </div>
     }/>
   );
