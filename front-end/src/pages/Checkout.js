@@ -26,7 +26,6 @@ function Checkout() {
       purchase_date: Date.now(),
       street: checkout[0],
       number: checkout[1],
-      // price,
     }
     sendAddress(invoice);
   }, [checkout]);
