@@ -22,7 +22,7 @@ const checkout = async (req, res) => {
   return res.status(200).json(productsCheckout);
 }
 
-router.get('/checkout', rescue(checkout))
+router.get('/checkout', rescue(checkout));
 
 router.get('/', rescue(allProducts));
 

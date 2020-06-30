@@ -3,7 +3,7 @@ import SideBar from '../components/SideBar';
 import Loading from '../components/Loading';
 import InvoiceTotal from '../components/InvoiceTotal';
 import Address from '../components/Address';
-import { getOrders, sendAddress } from '../service'
+import { getOrders, sendAddress } from '../service';
 
 function Checkout() {
   const [data, setData] = useState('');
@@ -13,11 +13,11 @@ function Checkout() {
     getOrders(user, setData);
   }, []);
   useEffect(() => {
-    const invoice = { 
+    const invoice = {
       purchase_date: Date.now(),
       street: checkout[0],
       number: checkout[1],
-    }
+    };
     sendAddress(invoice);
   }, [checkout]);
   if (!data) return <Loading />;
@@ -33,7 +33,7 @@ function Checkout() {
       />
       <br />
       <div>
-        <Address setCheckout={setCheckout}/>
+        <Address setCheckout={setCheckout} />
       </div>
     </div>
   );

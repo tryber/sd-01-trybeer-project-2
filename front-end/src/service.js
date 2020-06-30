@@ -78,4 +78,3 @@ export async function sendAddress(data) {
     res.json(),
   );
 }
-

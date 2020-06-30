@@ -107,7 +107,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function tableItens(list) {
+function tableItens(list, classes) {
   return list.map((text, index) => {
     return (
       text[0] && (
@@ -185,7 +185,7 @@ function SideBar({ children, title = 'TryBeer' }) {
           paper: classes.drawerPaper,
         }}>
         {iconDrawlerC(classes, handleDrawerClose, theme)}
-        <List>{tableItens(mock)}</List>
+        <List>{tableItens(mock, classes)}</List>
       </Drawer>
       <main
         className={clsx(classes.content, {
