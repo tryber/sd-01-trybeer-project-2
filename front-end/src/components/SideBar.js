@@ -137,7 +137,7 @@ function iconDrawer(classes, handleDrawerClose, theme) {
   );
 }
 
-function appBarSlider(classes, handleDrawerOpen, title) {
+function appBarSlider(classes, handleDrawerOpen, title, open) {
   return (
     <AppBar
       position="fixed"
@@ -175,7 +175,7 @@ function SideBar({ children, title = 'TryBeer' }) {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      {appBarSlider(classes, handleDrawerOpen, title)}
+      {appBarSlider(classes, handleDrawerOpen, title, open)}
       <Drawer
         className={classes.drawer}
         variant="persistent"
