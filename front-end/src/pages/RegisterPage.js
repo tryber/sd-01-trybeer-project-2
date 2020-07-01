@@ -5,7 +5,7 @@ import { validateLogin, sendData } from '../service';
 const generateForm = (param) => {
   const { sendData, setIsLoged, setIsAdmin, email, setEmail, password, setPassword, name, setName, role, setRole } = param;
   return (
-    <form onSubmit={(e) => sendData(e, { email, password, name, role },'user', setIsAdmin, setIsLoged)}>
+    <form onSubmit={(e) => sendData(e, { email, password, name, role }, 'user', setIsAdmin, setIsLoged)}>
       <label htmlFor="name">Nome</label>
       <input type="text" data-testid="signup-name" id="name" name="name" pattern="^[a-zA-Z\s]{12,40}$" onChange={(e) => setName(e.target.value)} required />
       <label htmlFor="email">Email</label>

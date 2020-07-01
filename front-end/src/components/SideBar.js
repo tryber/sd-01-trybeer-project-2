@@ -32,7 +32,13 @@ const drawerWidth = 240;
 const user = JSON.parse(localStorage.getItem('user')) || '';
 const adminRoute = user.role ? '/admin' : '';
 
-const mock = [['Produtos', 'products'], ['Meus pedidos', 'orders'], ['Meu Perfil', 'profile'], ['Sair', 'login']];
+const mock = [
+  ['Produtos', 'products'],
+  ['Meus pedidos', 'orders'],
+  ['Meu Perfil', 'profile'],
+  ['Sair', 'login'],
+];
+
 if (user.role) {
   mock[0] = '';
   mock[1][0] = 'Pedidos';
@@ -49,7 +55,7 @@ const useStyles = makeStyles(theme => ({
     }),
   },
   appBarShift: {
-    backgroundColor: "#00BFFF",
+    backgroundColor: '#00BFFF',
     width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: drawerWidth,
     transition: theme.transitions.create(['margin', 'width'], {
@@ -74,7 +80,6 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     alignItems: 'center',
     padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
     ...theme.mixins.toolbar,
     justifyContent: 'flex-end',
   },
@@ -98,76 +103,89 @@ const useStyles = makeStyles(theme => ({
   link: {
     textDecoration: 'none',
     display: 'flex',
-    color: 'gray'
-  }
+    color: 'gray',
+  },
 }));
 
-export default function SideBar({ children, title = 'TryBeer' }) {
+function tableItens(list, classes) {
+  return list.map((text, index) => {
+    return (
+      text[0] && (
+        <Link to={`${adminRoute}/${text[1]}`} className={classes.link} data-testid={`side-menu-item-${text[1]}`}>
+          <ListItem
+            button
+            key={text[0]}
+            onClick={() => {
+              if (text[1] === 'login') userLogout();
+            }}>
+            <ListItemIcon>{listIcon[index]}</ListItemIcon>
+            <ListItemText primary={text[0]} />
+          </ListItem>
+        </Link>
+      )
+    );
+  });
+}
+
+function iconDrawer(classes, handleDrawerClose, theme) {
+  return (
+    <div className={classes.drawerHeader}>
+      <IconButton onClick={handleDrawerClose} data-testid="top-hamburguer">
+        {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+      </IconButton>
+    </div>
+  );
+}
+
+function appBarSlider(classes, handleDrawerOpen, title, open) {
+  return (
+    <AppBar
+      position="fixed"
+      className={clsx(classes.appBar, {
+        [classes.appBarShift]: open,
+      })}>
+      <Toolbar>
+        <IconButton
+          color="inherit"
+          aria-label="open drawer"
+          onClick={handleDrawerOpen}
+          edge="start"
+          className={clsx(classes.menuButton, open && classes.hide)}>
+          <MenuIcon />
+        </IconButton>
+        <Typography variant="h6" data-testid="top-title" noWrap>
+          {title}
+        </Typography>
+      </Toolbar>
+    </AppBar>
+  );
+}
+
+function SideBar({ children, title = 'TryBeer' }) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = useState(false);
-
   const handleDrawerOpen = () => {
     setOpen(true);
   };
-
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  if (!user) return <Redirect to='/login'/>;
+  if (!user) return <Redirect to='/login' />;
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar
-        position='fixed'
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
-        })}>
-        <Toolbar>
-          <IconButton
-            color='inherit'
-            aria-label='open drawer'
-            onClick={handleDrawerOpen}
-            edge='start'
-            className={clsx(classes.menuButton, open && classes.hide)}>
-            <MenuIcon />
-          </IconButton>
-          <Typography variant='h6' noWrap>
-            {title}
-          </Typography>
-        </Toolbar>
-      </AppBar>
+      {appBarSlider(classes, handleDrawerOpen, title, open)}
       <Drawer
         className={classes.drawer}
-        variant='persistent'
-        anchor='left'
+        variant="persistent"
+        anchor="left"
         open={open}
         classes={{
           paper: classes.drawerPaper,
         }}>
-        <div className={classes.drawerHeader}>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? (
-              <ChevronLeftIcon />
-            ) : (
-              <ChevronRightIcon />
-            )}
-          </IconButton>
-        </div>
-
-        <List>
-          {mock.map((text, index) => {
-            return text[0] &&
-            <ListItem button key={text[0]} onClick={() => {
-                if (text[1] === 'login') return userLogout();
-            }}>
-              <Link to={`${adminRoute}/${text[1]}`} className={classes.link}>
-                <ListItemIcon>{listIcon[index]}</ListItemIcon>
-                <ListItemText primary={text[0]} />
-              </Link>
-            </ListItem>
-          })}
-        </List>
+        {iconDrawer(classes, handleDrawerClose, theme)}
+        <List>{tableItens(mock, classes)}</List>
       </Drawer>
       <main
         className={clsx(classes.content, {
@@ -179,3 +197,5 @@ export default function SideBar({ children, title = 'TryBeer' }) {
     </div>
   );
 }
+
+export default SideBar;

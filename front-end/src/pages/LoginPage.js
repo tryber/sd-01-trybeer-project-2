@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { validateLogin, sendData } from '../service';
 
-function LoginPage() {
+function LoginPage({ location: { pathname } }) {
   const [isLoged, setIsLoged] = useState(false);
   const [shouldRedirect, setShouldRedirect] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -13,10 +13,10 @@ function LoginPage() {
     validateLogin(setIsAdmin, setIsLoged);
   }, []);
 
+  if (pathname === '/admin/login') return <Redirect to='/login' />;
   if (isLoged && isAdmin) return <Redirect to='/admin/orders' />;
   if (isLoged && !isAdmin) return <Redirect to='/products' />;
   if (shouldRedirect) return <Redirect to='/register' />;
-
   return (
     <div>
       <form onSubmit={(e) => sendData(e, { email, password }, 'login', setIsAdmin, setIsLoged)}>
