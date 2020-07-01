@@ -117,7 +117,7 @@ function tableItens(list, classes) {
           onClick={() => {
             if (text[1] === 'login') userLogout();
           }}>
-          <Link to={`${adminRoute}/${text[1]}`} className={classes.link}>
+          <Link to={`${adminRoute}/${text[1]}`} className={classes.link} data-testid={`side-menu-item-${text[1]}`}>
             <ListItemIcon>{listIcon[index]}</ListItemIcon>
             <ListItemText primary={text[0]} />
           </Link>
@@ -127,7 +127,7 @@ function tableItens(list, classes) {
   });
 }
 
-function iconDrawlerC(classes, handleDrawerClose, theme) {
+function iconDrawer(classes, handleDrawerClose, theme) {
   return (
     <div className={classes.drawerHeader}>
       <IconButton onClick={handleDrawerClose}>
@@ -184,7 +184,7 @@ function SideBar({ children, title = 'TryBeer' }) {
         classes={{
           paper: classes.drawerPaper,
         }}>
-        {iconDrawlerC(classes, handleDrawerClose, theme)}
+        {iconDrawer(classes, handleDrawerClose, theme)}
         <List>{tableItens(mock, classes)}</List>
       </Drawer>
       <main

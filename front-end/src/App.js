@@ -5,6 +5,7 @@ import RegisterPage from './pages/RegisterPage';
 import ProfilePage from './pages/ProfilePage';
 import ProductsPage from './pages/ProductsPage';
 import OrderPage from './pages/OrderPage';
+import OrderDetails from './pages/OrderDetails';
 import Checkout from './pages/Checkout';
 
 function App() {
@@ -18,7 +19,9 @@ function App() {
           <Route path='/register' component={RegisterPage} />
           <Route path='/profile' component={ProfilePage} />
           <Route path='/admin/profile' component={ProfilePage} />
+          <Route path='/orders/:id' component={OrderDetails} />
           <Route path='/orders' component={OrderPage} />
+          <Route path='/admin/orders/:id' component={OrderDetails} />
           <Route path='/admin/orders' component={OrderPage} />
           <Route path='/checkout' component={Checkout} />
           <Route path='/admin/checkout' component={Checkout} />
