@@ -130,7 +130,7 @@ function tableItens(list, classes) {
 function iconDrawer(classes, handleDrawerClose, theme) {
   return (
     <div className={classes.drawerHeader}>
-      <IconButton onClick={handleDrawerClose}>
+      <IconButton onClick={handleDrawerClose} data-testid="top-hamburguer">
         {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
       </IconButton>
     </div>
@@ -153,7 +153,7 @@ function appBarSlider(classes, handleDrawerOpen, title, open) {
           className={clsx(classes.menuButton, open && classes.hide)}>
           <MenuIcon />
         </IconButton>
-        <Typography variant="h6" noWrap>
+        <Typography variant="h6" data-testid="top-title" noWrap>
           {title}
         </Typography>
       </Toolbar>
