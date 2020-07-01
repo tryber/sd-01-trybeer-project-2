@@ -111,17 +111,17 @@ function tableItens(list, classes) {
   return list.map((text, index) => {
     return (
       text[0] && (
-        <ListItem
-          button
-          key={text[0]}
-          onClick={() => {
-            if (text[1] === 'login') userLogout();
-          }}>
-          <Link to={`${adminRoute}/${text[1]}`} className={classes.link} data-testid={`side-menu-item-${text[1]}`}>
+        <Link to={`${adminRoute}/${text[1]}`} className={classes.link} data-testid={`side-menu-item-${text[1]}`}>
+          <ListItem
+            button
+            key={text[0]}
+            onClick={() => {
+              if (text[1] === 'login') userLogout();
+            }}>
             <ListItemIcon>{listIcon[index]}</ListItemIcon>
             <ListItemText primary={text[0]} />
-          </Link>
-        </ListItem>
+          </ListItem>
+        </Link>
       )
     );
   });
