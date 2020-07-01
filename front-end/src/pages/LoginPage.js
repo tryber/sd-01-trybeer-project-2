@@ -13,7 +13,6 @@ function LoginPage({ location: { pathname } }) {
     validateLogin(setIsAdmin, setIsLoged);
   }, []);
 
-  if (pathname === '/admin/login') return <Redirect to='/login' />;
   if (isLoged && isAdmin) return <Redirect to='/admin/orders' />;
   if (isLoged && !isAdmin) return <Redirect to='/products' />;
   if (shouldRedirect) return <Redirect to='/register' />;
