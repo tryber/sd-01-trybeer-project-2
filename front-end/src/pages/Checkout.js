@@ -41,10 +41,7 @@ function Checkout() {
   return (
     <div>
       {sideBar(data, setShouldUpdate)}
-      <br />
-      <div>
-        <Address setCheckout={setCheckout} />
-      </div>
+      <Address setCheckout={setCheckout} />
     </div>
   );
 }
