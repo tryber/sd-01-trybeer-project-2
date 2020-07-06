@@ -17,6 +17,9 @@ const useStyles = makeStyles({
   cels: {
     border: '1px solid #3f51b5',
   },
+  deleteIcon: {
+    cursor: 'pointer',
+  },
 });
 
 function total(products) {
@@ -39,9 +42,9 @@ function tableRomDescription({ cels }) {
   );
 }
 
-function constructorTableCell(data, { cels }) {
+function constructorTableCell(data, { cels, deleteIcon }, setShouldUpdate) {
   return data.map(({ quantity, name, price }) => (
-    <TableRow className={cels}>
+    <TableRow className={cels} key={name}>
       <TableCell className={cels} align='left'>
         {quantity}
       </TableCell>
@@ -52,7 +55,10 @@ function constructorTableCell(data, { cels }) {
         {transformCurrency(price * quantity)}
       </TableCell>
       <TableCell className={cels} align='left'>
-        <DeleteIcon onClick={e => deleteProduct(e, name)} />
+        <DeleteIcon className={deleteIcon} onClick={() => {
+          setShouldUpdate(true);
+          deleteProduct(name);
+        }} />
       </TableCell>
     </TableRow>
   ));
@@ -60,13 +66,14 @@ function constructorTableCell(data, { cels }) {
 
 function InvoiceTotal(props) {
   const classes = useStyles();
-  const { data } = props;
+  const { data, setShouldUpdate } = props;
+
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label='spanning table'>
         <TableHead>{tableRomDescription(classes)}</TableHead>
         <TableBody>
-          {constructorTableCell(data, classes)}
+          {constructorTableCell(data, classes, setShouldUpdate)}
           <TableRow>
             <TableCell></TableCell>
             <TableCell colSpan={1}>Total</TableCell>
