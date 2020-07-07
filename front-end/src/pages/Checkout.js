@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
 import SideBar from '../components/SideBar';
 import Loading from '../components/Loading';
 import InvoiceTotal from '../components/InvoiceTotal';
 import Address from '../components/Address';
-import { getOrders, sendAddress } from '../service';
+import { getOrders, sendAddress, total } from '../service';
 
 function sideBar(data) {
   return (
@@ -21,19 +22,23 @@ function sideBar(data) {
 function Checkout() {
   const [data, setData] = useState('');
   const [checkout, setCheckout] = useState('');
+  const [shouldRedirect, setShouldRedirect] = useState(false);
   const user = JSON.parse(localStorage.getItem('user'));
   useEffect(() => {
     getOrders(user, setData);
   }, []);
   useEffect(() => {
-    const invoice = {
-      purchase_date: Date.now(),
-      street: checkout[0],
-      number: checkout[1],
-    };
-    sendAddress(invoice);
+    if (checkout) {
+      sendAddress({
+        purchaseDate: new Date().toISOString().split('T')[0],
+        street: checkout[0],
+        number: checkout[1],
+        price: total(data),
+      }, user, setShouldRedirect);
+    }
   }, [checkout]);
   if (!data) return <Loading />;
+  if (shouldRedirect) return <Redirect to="/products" />
   return (
     <div>
       {sideBar(data)}

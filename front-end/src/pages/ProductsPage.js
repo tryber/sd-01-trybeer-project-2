@@ -36,7 +36,7 @@ const useStyles = makeStyles(() => ({
     textAlign: 'center',
     backgroundColor: '#0fa36b'
   },
-  btnLink: {
+  btnLinkActivate: {
     margin: '0, 25%, 0, 25%',
     fontSize: '2em',
     textDecoration: 'none',
@@ -44,6 +44,16 @@ const useStyles = makeStyles(() => ({
     display: 'flex',
     justifyContent: 'space-around',
     flexDirection: 'row',
+  },
+  btnLinkDisabled: {
+    margin: '0, 25%, 0, 25%',
+    fontSize: '2em',
+    textDecoration: 'none',
+    color: 'white',
+    display: 'flex',
+    justifyContent: 'space-around',
+    flexDirection: 'row',
+    pointerEvents: 'none',
   }
 }));
 
@@ -62,7 +72,8 @@ function generateView(classes, data, totalValue, setTotalValue, submitProduct) {
         />)}
       </div>
       <div className={classes.btnContainer}>
-        <Link className={classes.btnLink} to='/checkout' data-testid="checkout-bottom-btn">
+        <Link className={totalValue ? classes.btnLinkActivate : classes.btnLinkDisabled}
+          to='/checkout' data-testid="checkout-bottom-btn">
           <p>Ver carrinho</p>
           <p data-testid="checkout-bottom-btn-value">
             R${totalValue.toFixed(2)}

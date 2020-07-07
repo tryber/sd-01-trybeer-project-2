@@ -8,7 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { transformCurrency, deleteProduct } from '../service';
+import { transformCurrency, deleteProduct, total } from '../service';
 
 const useStyles = makeStyles({
   table: {
@@ -18,10 +18,6 @@ const useStyles = makeStyles({
     border: '1px solid #3f51b5',
   },
 });
-
-function total(products) {
-  return products.reduce((acc, value) => acc + value.price * value.quantity, 0);
-}
 
 function tableRomDescription({ cels }) {
   return (
