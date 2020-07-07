@@ -50,7 +50,7 @@ function renderDetails(params) {
       {(user.role === 1 && !finished) &&
       <Button
         fullWidth
-        data-testid="mark-as-delivered-btn" 
+        data-testid="mark-as-delivered-btn"
         variant="contained"
         color="primary"
         className={classes.submit}

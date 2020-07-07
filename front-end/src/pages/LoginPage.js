@@ -94,22 +94,8 @@ const gridLogin = (setShouldRedirect) => {
   );
 }
 
-function LoginPage() {
-  const [isLoged, setIsLoged] = useState(false);
-  const [shouldRedirect, setShouldRedirect] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const classes = usingStyle();
-
-  useEffect(() => {
-    validateLogin(setIsAdmin, setIsLoged);
-  }, []);
-
-  if (isLoged && isAdmin) return <Redirect to='/admin/orders' />;
-  if (isLoged && !isAdmin) return <Redirect to='/products' />;
-  if (shouldRedirect) return <Redirect to='/register' />;
-
+function renderLogin(params) {
+  const { classes, setShouldRedirect, email, setEmail, password, setPassword, setIsAdmin, setIsLoged } = params;
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -132,6 +118,28 @@ function LoginPage() {
         <Copyright />
       </Box>
     </Container>
+  );
+}
+
+function LoginPage() {
+  const [isLoged, setIsLoged] = useState(false);
+  const [shouldRedirect, setShouldRedirect] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const classes = usingStyle();
+
+  useEffect(() => {
+    validateLogin(setIsAdmin, setIsLoged);
+  }, []);
+
+  if (isLoged && isAdmin) return <Redirect to='/admin/orders' />;
+  if (isLoged && !isAdmin) return <Redirect to='/products' />;
+  if (shouldRedirect) return <Redirect to='/register' />;
+
+  const params = { classes, setShouldRedirect, email, setEmail, password, setPassword, setIsAdmin, setIsLoged };
+  return (
+    renderLogin(params)
   );
 }
 
