@@ -20,7 +20,7 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
+      <Link color="inherit" href="https://github.com/tryber/sd-01-trybeer-project-2">
         Trybeer
       </Link>{' '}
       {new Date().getFullYear()}
@@ -107,7 +107,7 @@ const btnEntrar = (classes) => {
       color="primary"
       className={classes.submit}
     >
-      Sign In
+      Entrar
     </Button>
   );
 }
@@ -122,7 +122,7 @@ const gridLogin = (setShouldRedirect) => {
       </Grid>
       <Grid item>
         <Link
-          href="#"
+          href="/register"
           variant="body2"
           data-testid="no-account-btn"
           onClick={() => setShouldRedirect(true)}
@@ -148,6 +148,8 @@ function LoginPage({ location: { pathname } }) {
   if (isLoged && isAdmin) return <Redirect to='/admin/orders' />;
   if (isLoged && !isAdmin) return <Redirect to='/products' />;
   if (shouldRedirect) return <Redirect to='/register' />;
+  console.log('shouldRedirect', shouldRedirect)
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
