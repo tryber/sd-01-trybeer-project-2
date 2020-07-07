@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
-import { validateLogin, sendData } from '../service';
+import { validateLogin, sendData, usingStyle, Copyright } from '../service';
+
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -13,20 +14,6 @@ import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import { usingStyle } from '../service'
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://github.com/tryber/sd-01-trybeer-project-2">
-        Trybeer
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
 const textFieldMail = (setEmail) => {
   return (
@@ -55,13 +42,11 @@ const textFieldPassword = (setPassword) => {
       required
       type="password"
       data-testid="password-input"
-      pattern="^[0-9]{6,20}$"
       onChange={(e) => setPassword(e.target.value)}
       fullWidth
       name="password"
       label="Password"
       id="password"
-      autoComplete="current-password"
     />
   );
 }
@@ -93,13 +78,7 @@ const btnEntrar = (classes) => {
 
 const gridLogin = (setShouldRedirect) => {
   return (
-    <Grid container>
-      <Grid item xs>
-        <Link href="#" variant="body2">
-          <br />
-          Esqueceu a senha?
-        </Link>
-      </Grid>
+    <Grid container justify="center">
       <Grid item>
         <Link
           href="/register"
@@ -114,22 +93,9 @@ const gridLogin = (setShouldRedirect) => {
     </Grid>
   );
 }
-function LoginPage({ location: { pathname } }) {
-  const [isLoged, setIsLoged] = useState(false);
-  const [shouldRedirect, setShouldRedirect] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const classes = usingStyle();
 
-  useEffect(() => {
-    validateLogin(setIsAdmin, setIsLoged);
-  }, []);
-
-  if (isLoged && isAdmin) return <Redirect to='/admin/orders' />;
-  if (isLoged && !isAdmin) return <Redirect to='/products' />;
-  if (shouldRedirect) return <Redirect to='/register' />;
-
+function renderLogin(params) {
+  const { classes, setShouldRedirect, email, setEmail, password, setPassword, setIsAdmin, setIsLoged } = params;
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -152,6 +118,28 @@ function LoginPage({ location: { pathname } }) {
         <Copyright />
       </Box>
     </Container>
+  );
+}
+
+function LoginPage() {
+  const [isLoged, setIsLoged] = useState(false);
+  const [shouldRedirect, setShouldRedirect] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const classes = usingStyle();
+
+  useEffect(() => {
+    validateLogin(setIsAdmin, setIsLoged);
+  }, []);
+
+  if (isLoged && isAdmin) return <Redirect to='/admin/orders' />;
+  if (isLoged && !isAdmin) return <Redirect to='/products' />;
+  if (shouldRedirect) return <Redirect to='/register' />;
+
+  const params = { classes, setShouldRedirect, email, setEmail, password, setPassword, setIsAdmin, setIsLoged };
+  return (
+    renderLogin(params)
   );
 }
 

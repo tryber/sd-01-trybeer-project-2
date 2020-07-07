@@ -1,13 +1,16 @@
+import React from 'react';
 import api from './api';
 import { toast } from 'react-toastify';
 import { makeStyles } from '@material-ui/core/styles';
-
+import Typography from '@material-ui/core/Typography';
+import Link from '@material-ui/core/Link';
 
 export async function validateLogin(setIsAdmin, setIsLoged) {
-  if (!JSON.parse(localStorage.getItem('user'))) return setIsLoged(false);
+  const user = JSON.parse(localStorage.getItem('user'));
+  if (!user) return setIsLoged(false);
   const result = await fetch('http://localhost:3001/user', {
     method: 'GET',
-    headers: { authorization: JSON.parse(localStorage.getItem('user')).token },
+    headers: { authorization: user.token },
   }).then(res => res.json());
   if (!result || result.message === 'jwt expired') {
     setIsLoged(false);
@@ -27,7 +30,7 @@ export async function sendData(event, data, url, setIsAdmin, setIsLoged) {
     },
     body: JSON.stringify(data),
   }).then(res => res.json());
-  if (result.message) return alert('Email já cadastrado');
+  if (result.message) return alert('Dados Inválidos! Tente Novamente');
   localStorage.setItem('user', JSON.stringify(result));
   if (result.role) setIsAdmin(true);
   setIsLoged(true);
@@ -84,7 +87,7 @@ export async function sendAddress(data, user, func) {
 }
 
 export function total(products) {
-  return products.reduce((acc, value) => acc + value.price * value.quantity, 0) || 0;
+  return products.reduce((acc, value) => acc + value.price * value.quantity, 0).toFixed(2) || 0;
 }
 
 export const usingStyle = makeStyles((theme) => ({
@@ -106,3 +109,16 @@ export const usingStyle = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
 }));
+
+export function Copyright() {
+  return (
+    <Typography variant="body2" color="textSecondary" align="center">
+      {'Copyright © '}
+      <Link color="inherit" href="https://github.com/tryber/sd-01-trybeer-project-2">
+        Trybeer
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+}
