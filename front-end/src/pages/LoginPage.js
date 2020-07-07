@@ -55,10 +55,10 @@ const textFieldMail = (setEmail) => {
       variant="outlined"
       margin="normal"
       required
-      type="email" 
-      data-testid="email-input" 
-      id="email" 
-      name="email" 
+      type="email"
+      data-testid="email-input"
+      id="email"
+      name="email"
       onChange={(e) => setEmail(e.target.value)}
       fullWidth
       label="Email"
@@ -74,9 +74,9 @@ const textFieldPassword = (setPassword) => {
       variant="outlined"
       margin="normal"
       required
-      type="password" 
-      data-testid="password-input" 
-      pattern="^[0-9]{6,20}$" 
+      type="password"
+      data-testid="password-input"
+      pattern="^[0-9]{6,20}$"
       onChange={(e) => setPassword(e.target.value)}
       fullWidth
       name="password"
@@ -121,8 +121,8 @@ const gridLogin = (setShouldRedirect) => {
         </Link>
       </Grid>
       <Grid item>
-        <Link 
-          href="#" 
+        <Link
+          href="#"
           variant="body2"
           data-testid="no-account-btn"
           onClick={() => setShouldRedirect(true)}
