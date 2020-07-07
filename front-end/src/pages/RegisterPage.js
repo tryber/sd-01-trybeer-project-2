@@ -13,8 +13,8 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { usingStyle } from '../service'
 
 function Copyright() {
   return (
@@ -28,26 +28,6 @@ function Copyright() {
     </Typography>
   );
 }
-
-const useingStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
 
 const textFieldName = (setName) => {
   return (
@@ -102,7 +82,6 @@ const textFieldPass = (setPassword) => {
         fullWidth
         name="password"
         label="Password"
-        type="password"
         id="password"
         autoComplete="current-password"
       />
@@ -144,11 +123,12 @@ const btnEntrar = (classes) => {
 const gridLogin = () => {
   return (
     <Grid container justify="flex-end">
-      <Grid item>
-        <Link 
+      <Grid item >
+        <Link
           href="/login"
           variant="body2"
         >
+          <br />
           Já tem uma conta? Entre aqui
         </Link>
       </Grid>
@@ -156,17 +136,23 @@ const gridLogin = () => {
   );
 }
 
+const avatarGenerate = (classes) => {
+  return (
+    <Avatar className={classes.avatar}>
+      <LockOutlinedIcon />
+    </Avatar>
+  );
+}
+
 const generateForm = (param) => {
   const { sendData, setIsLoged, setIsAdmin, email, setEmail, password, setPassword, name, setName, role, setRole } = param;
-  const classes = useingStyles();
+  const classes = usingStyle();
 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
+        {avatarGenerate(classes)}
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
@@ -181,9 +167,7 @@ const generateForm = (param) => {
           {gridLogin()}
         </form>
       </div>
-      <Box mt={5}>
-        <Copyright />
-      </Box>
+      <Box mt={5}><Copyright /></Box>
     </Container>
   );
 };
