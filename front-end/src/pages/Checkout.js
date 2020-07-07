@@ -5,7 +5,6 @@ import Loading from '../components/Loading';
 import InvoiceTotal from '../components/InvoiceTotal';
 import Address from '../components/Address';
 import { getOrders, sendAddress, total } from '../service';
-import { Redirect } from 'react-router-dom';
 
 function sideBar(data, setShouldUpdate) {
   return (
