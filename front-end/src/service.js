@@ -1,28 +1,86 @@
-export function validateLogin(setIsAdmin, setIsLoged) {
-  const user = localStorage.getItem('user');
-  if (!user) return;
-  async function getUserData() {
-    const result = await fetch('http://localhost:3001/user', { method: 'GET', headers: user }).then(res => res.json());
-    if (!result) return false;
-    if (result.role) setIsAdmin(true);
-    setIsLoged(true);
+import api from './api';
+import { toast } from 'react-toastify';
+
+export async function validateLogin(setIsAdmin, setIsLoged) {
+  if (!JSON.parse(localStorage.getItem('user'))) return setIsLoged(false);
+  const result = await fetch('http://localhost:3001/user', {
+    method: 'GET',
+    headers: { authorization: JSON.parse(localStorage.getItem('user')).token },
+  }).then(res => res.json());
+  if (!result || result.message === 'jwt expired') {
+    setIsLoged(false);
+    return false;
   }
-  getUserData();
+  if (result.role) setIsAdmin(true);
+  setIsLoged(true);
+  return true;
 }
 
-export async function sendData(event, data, setShouldRedirect) {
-  event.preventDefault();
-  const result = await fetch(`http://localhost:3001/user`,
-    {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    })
-    .then(res => res.json());
+export async function sendData(event, data, url, setIsAdmin, setIsLoged) {
+  const result = await fetch(`http://localhost:3001/${url}`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  }).then(res => res.json());
   if (result.message) return alert('Email já cadastrado');
   localStorage.setItem('user', JSON.stringify(result));
-  setShouldRedirect(true);
+  if (result.role) setIsAdmin(true);
+  setIsLoged(true);
+}
+
+export function userLogout() {
+  return localStorage.removeItem('user');
+}
+
+export function transformCurrency(currency) {
+  return currency.toLocaleString('pt-BR', {
+    minimumFractionDigits: 2,
+    style: 'currency',
+    currency: 'BRL',
+  });
+}
+
+export async function deleteProduct(name) {
+  const user = JSON.parse(localStorage.getItem('user'));
+  let endPoint = `/products/${name}`;
+  const config = { headers: { authorization: user.token } };
+  try {
+    api.delete(endPoint, config);
+  } catch (error) {
+    toast.error(error.message);
+  }
+}
+
+export async function getOrders(user, setData) {
+  let endPoint = '/products/checkout';
+  const config = { headers: { authorization: user.token } };
+  try {
+    api.get(endPoint, config).then(({ data }) => setData(data.data));
+  } catch (error) {
+    toast.error(error.message);
+  }
+}
+
+export async function sendAddress(data, user, func) {
+  const url = 'http://localhost:3001/orders';
+  const config = {
+    method: 'POST',
+    headers: {
+      authorization: user.token,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data)
+  };
+  await fetch(url, config).then(res => res.json())
+    .then(() => alert('Pedido realizado com sucesso!'))
+    .catch(() => alert('Pedido não concluído!'));
+  func(true);
+}
+
+export function total(products) {
+  return products.reduce((acc, value) => acc + value.price * value.quantity, 0) || 0;
 }
