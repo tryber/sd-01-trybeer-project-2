@@ -43,8 +43,7 @@ export function transformCurrency(currency) {
   });
 }
 
-export async function deleteProduct(e, name) {
-  e.preventDefault();
+export async function deleteProduct(name) {
   const user = JSON.parse(localStorage.getItem('user'));
   let endPoint = `/products/${name}`;
   const config = { headers: { authorization: user.token } };
@@ -65,16 +64,23 @@ export async function getOrders(user, setData) {
   }
 }
 
-export async function sendAddress(data) {
-  const url = 'http://localhost:3001/products/checkout';
+export async function sendAddress(data, user, func) {
+  const url = 'http://localhost:3001/orders';
   const config = {
     method: 'POST',
     headers: {
+      authorization: user.token,
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
+    body: JSON.stringify(data)
   };
-  return fetch(url, config, { body: JSON.stringify(data) }).then(res =>
-    res.json(),
-  );
+  await fetch(url, config).then(res => res.json())
+    .then(() => alert('Pedido realizado com sucesso!'))
+    .catch(() => alert('Pedido não concluído!'));
+  func(true);
+}
+
+export function total(products) {
+  return products.reduce((acc, value) => acc + value.price * value.quantity, 0) || 0;
 }

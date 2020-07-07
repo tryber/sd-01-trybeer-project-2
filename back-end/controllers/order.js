@@ -2,12 +2,15 @@ const express = require('express');
 const rescue = require('../rescue');
 const Order = require('../models/order');
 const Products = require('../models/products');
+const { getCartId } = require('../service/getProducts');
 
 const router = express.Router();
 
 const createOrder = async (req, res) => {
-  const { street, number, cart_id, price, purchase_date: purchaseDate, finished } = req.body;
-  const order = new Order(street, number, cart_id, price, purchaseDate, finished);
+  const { email } = req.user;
+  const cartId = await getCartId(email);
+  const { street, number, price, purchaseDate, finished } = req.body;
+  const order = new Order(street, number, cartId, price, purchaseDate, finished);
   return order.create().then(response => res.status(201).json(response));
 };
 
