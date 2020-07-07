@@ -6,13 +6,14 @@ import InvoiceTotal from '../components/InvoiceTotal';
 import Address from '../components/Address';
 import { getOrders, sendAddress, total } from '../service';
 
-function sideBar(data, setShouldUpdate) {
+function render(data, setShouldUpdate, setCheckout) {
   return (
     <SideBar
       title='Cliente - Checkout'
       children={
         <div>
           <InvoiceTotal data={data} setShouldUpdate={setShouldUpdate}/>
+          <Address setCheckout={setCheckout} />
         </div>
       }
     />
@@ -44,8 +45,7 @@ function Checkout() {
   if (shouldRedirect) return <Redirect to="/products" />
   return (
     <div>
-      {sideBar(data, setShouldUpdate)}
-      <Address setCheckout={setCheckout} />
+      {render(data, setShouldUpdate, setCheckout)}
     </div>
   );
 }
