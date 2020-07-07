@@ -43,8 +43,7 @@ export function transformCurrency(currency) {
   });
 }
 
-export async function deleteProduct(e, name) {
-  e.preventDefault();
+export async function deleteProduct(name) {
   const user = JSON.parse(localStorage.getItem('user'));
   let endPoint = `/products/${name}`;
   const config = { headers: { authorization: user.token } };

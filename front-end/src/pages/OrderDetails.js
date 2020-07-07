@@ -45,7 +45,7 @@ function renderDetails(params) {
         {renderProducts(products, classes)}
         <h1 className={classes.totalPrice}>Total: <span data-testid="order-total-value">R$ {price}</span></h1>
       </div>
-      {(user.role && !finished) && <button data-testid="mark-as-delivered-btn" onClick={() => updateStatus(user, id, setShowButton)}>Marcar como Entregue</button>}
+      {(user.role === 1 && !finished) && <button data-testid="mark-as-delivered-btn" onClick={() => updateStatus(user, id, setShowButton)}>Marcar como Entregue</button>}
     </div>
   );
 }

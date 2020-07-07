@@ -5,14 +5,15 @@ import Loading from '../components/Loading';
 import InvoiceTotal from '../components/InvoiceTotal';
 import Address from '../components/Address';
 import { getOrders, sendAddress, total } from '../service';
+import { Redirect } from 'react-router-dom';
 
-function sideBar(data) {
+function sideBar(data, setShouldUpdate) {
   return (
     <SideBar
       title='Cliente - Checkout'
       children={
         <div>
-          <InvoiceTotal data={data} />
+          <InvoiceTotal data={data} setShouldUpdate={setShouldUpdate}/>
         </div>
       }
     />
@@ -23,10 +24,12 @@ function Checkout() {
   const [data, setData] = useState('');
   const [checkout, setCheckout] = useState('');
   const [shouldRedirect, setShouldRedirect] = useState(false);
+  const [shouldUpdate, setShouldUpdate] = useState('');
   const user = JSON.parse(localStorage.getItem('user'));
   useEffect(() => {
     getOrders(user, setData);
-  }, []);
+    setShouldUpdate(false);
+  }, [shouldUpdate]);
   useEffect(() => {
     if (checkout) {
       sendAddress({
@@ -37,15 +40,13 @@ function Checkout() {
       }, user, setShouldRedirect);
     }
   }, [checkout]);
+  if (!user) return <Redirect to="/login" />
   if (!data) return <Loading />;
   if (shouldRedirect) return <Redirect to="/products" />
   return (
     <div>
-      {sideBar(data)}
-      <br />
-      <div>
-        <Address setCheckout={setCheckout} />
-      </div>
+      {sideBar(data, setShouldUpdate)}
+      <Address setCheckout={setCheckout} />
     </div>
   );
 }
