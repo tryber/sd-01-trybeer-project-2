@@ -14,8 +14,8 @@ async function getOrders(user, setData) {
 }
 
 function sortData(data) {
-  const deliveredSort = data.sort((a, b) => a.props.order.finished - b.props.order.finished);
   const dateSort = data.sort((a, b) => b.props.order.purchase_id - a.props.order.purchase_id);
+  const deliveredSort = data.sort((a, b) => a.props.order.finished - b.props.order.finished);
   return data[0].props.isAdmin ? deliveredSort : dateSort;
 }
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
-import { validateLogin, sendData } from '../service';
+import { validateLogin, sendData, Copyright, usingStyle } from '../service';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -14,20 +14,6 @@ import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import { usingStyle } from '../service'
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://github.com/tryber/sd-01-trybeer-project-2">
-        Trybeer
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
 const textFieldName = (setName) => {
   return (
@@ -83,7 +69,6 @@ const textFieldPass = (setPassword) => {
         name="password"
         label="Password"
         id="password"
-        autoComplete="current-password"
       />
     </Grid>
   );
@@ -105,7 +90,6 @@ const formControl = (setRole) => {
 }
 
 const btnEntrar = (classes) => {
-
   return (
     <Button
       type="submit"
@@ -122,7 +106,7 @@ const btnEntrar = (classes) => {
 
 const gridLogin = () => {
   return (
-    <Grid container justify="flex-end">
+    <Grid container justify="center">
       <Grid item >
         <Link
           href="/login"
@@ -187,7 +171,7 @@ function RegisterPage() {
   if (isLoged && isAdmin) return <Redirect to='/admin/orders' />;
   if (isLoged && !isAdmin) return <Redirect to='/products' />;
 
-  const allProperties = { sendData, setIsLoged, setIsAdmin, email, setEmail, password, setPassword, name, setName, role, setRole, };
+  const allProperties = { sendData, setIsLoged, setIsAdmin, email, setEmail, password, setPassword, name, setName, role, setRole };
   return (
     <div>
       {generateForm(allProperties)}
