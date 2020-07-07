@@ -87,7 +87,7 @@ export async function sendAddress(data, user, func) {
 }
 
 export function total(products) {
-  return products.reduce((acc, value) => acc + value.price * value.quantity, 0) || 0;
+  return products.reduce((acc, value) => acc + value.price * value.quantity, 0).toFixed(2) || 0;
 }
 
 export const usingStyle = makeStyles((theme) => ({

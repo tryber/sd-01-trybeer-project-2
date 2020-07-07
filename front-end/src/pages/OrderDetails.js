@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
 import SideBar from '../components/SideBar';
+
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 
 async function getOrders(user, setData, id) {
   const url = `http://localhost:3001/orders/${id}`;
@@ -45,12 +47,22 @@ function renderDetails(params) {
         {renderProducts(products, classes)}
         <h1 className={classes.totalPrice}>Total: <span data-testid="order-total-value">R$ {price}</span></h1>
       </div>
-      {(user.role === 1 && !finished) && <button data-testid="mark-as-delivered-btn" onClick={() => updateStatus(user, id, setShowButton)}>Marcar como Entregue</button>}
+      {(user.role === 1 && !finished) &&
+      <Button
+        fullWidth
+        data-testid="mark-as-delivered-btn" 
+        variant="contained"
+        color="primary"
+        className={classes.submit}
+        onClick={() => updateStatus(user, id, setShowButton)}
+      >
+        Marcar como Entregue
+      </Button>}
     </div>
   );
 }
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   container: {
     border: '1px solid black',
     paddingLeft: 10,
@@ -69,7 +81,10 @@ const useStyles = makeStyles({
   totalPrice: {
     textAlign: 'end',
   },
-});
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+}));
 
 function OrderDetails(props) {
   const [data, setData] = useState('');
