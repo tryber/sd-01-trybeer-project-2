@@ -12,15 +12,14 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-
+import { usingStyle } from '../service'
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
+      <Link color="inherit" href="https://github.com/tryber/sd-01-trybeer-project-2">
         Trybeer
       </Link>{' '}
       {new Date().getFullYear()}
@@ -28,26 +27,6 @@ function Copyright() {
     </Typography>
   );
 }
-
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
 
 const textFieldMail = (setEmail) => {
   return (
@@ -107,7 +86,7 @@ const btnEntrar = (classes) => {
       color="primary"
       className={classes.submit}
     >
-      Sign In
+      Entrar
     </Button>
   );
 }
@@ -117,16 +96,18 @@ const gridLogin = (setShouldRedirect) => {
     <Grid container>
       <Grid item xs>
         <Link href="#" variant="body2">
+          <br />
           Esqueceu a senha?
         </Link>
       </Grid>
       <Grid item>
         <Link
-          href="#"
+          href="/register"
           variant="body2"
           data-testid="no-account-btn"
           onClick={() => setShouldRedirect(true)}
         >
+          <br />
           {"Ainda não tem uma conta? Cadastre-se"}
         </Link>
       </Grid>
@@ -139,7 +120,7 @@ function LoginPage({ location: { pathname } }) {
   const [isAdmin, setIsAdmin] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const classes = useStyles();
+  const classes = usingStyle();
 
   useEffect(() => {
     validateLogin(setIsAdmin, setIsLoged);
@@ -148,6 +129,7 @@ function LoginPage({ location: { pathname } }) {
   if (isLoged && isAdmin) return <Redirect to='/admin/orders' />;
   if (isLoged && !isAdmin) return <Redirect to='/products' />;
   if (shouldRedirect) return <Redirect to='/register' />;
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
