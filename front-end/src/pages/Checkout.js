@@ -44,9 +44,7 @@ function Checkout() {
   if (!data) return <Loading />;
   if (shouldRedirect) return <Redirect to="/products" />
   return (
-    <div>
-      {render(data, setShouldUpdate, setCheckout)}
-    </div>
+    render(data, setShouldUpdate, setCheckout)
   );
 }
 
